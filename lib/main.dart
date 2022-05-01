@@ -8,18 +8,19 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:iconsax/iconsax.dart';
 
 final buttonColors = WindowButtonColors(
-    iconNormal: const Color(0xFF805306),
-    mouseOver: const Color(0xFFF6A00C),
-    mouseDown: const Color(0xFF805306),
-    iconMouseOver: const Color(0xFF805306),
-    iconMouseDown: const Color(0xFFFFD500));
+  iconNormal: const Color(0xFF805306),
+  mouseOver: const Color(0xFFF6A00C),
+  mouseDown: const Color(0xFF805306),
+  iconMouseOver: const Color(0xFF805306),
+  iconMouseDown: const Color(0xFFFFD500),
+);
 
 final closeButtonColors = WindowButtonColors(
-    mouseOver: const Color(0xFFD32F2F),
-    mouseDown: const Color(0xFFB71C1C),
-    iconNormal: const Color(0xFF805306),
-    iconMouseOver: Colors.white);
-
+  mouseOver: const Color(0xFFD32F2F),
+  mouseDown: const Color(0xFFB71C1C),
+  iconNormal: const Color(0xFF805306),
+  iconMouseOver: Colors.white,
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,87 +37,82 @@ void main() async {
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       showPerformanceOverlay: false,
-      home: WindowBorder(
-        color: Colors.blue,
-        width: 1,
-        child: Builder(
-          builder: (context) {
-            return Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Padding(
-                padding: const EdgeInsets.all(5),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 0,
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: MoveWindow(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+      home: Builder(
+        builder: (BuildContext context) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "iPhone 13 Pro Max",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Text(
-                                  "ios 14.4",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 105, 104, 104),
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ],
+              children: [
+                Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: MoveWindow(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              "iPhone 13 Pro Max",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
                             ),
-                            const Spacer(),
-                            MinimizeWindowButton(colors: buttonColors),
-                            MaximizeWindowButton(colors: buttonColors),
-                            CloseWindowButton(colors: closeButtonColors),
+                            Text(
+                              "ios 14.4",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 105, 104, 104),
+                                  fontWeight: FontWeight.w500),
+                            )
                           ],
                         ),
-                      ),
+                        const Spacer(),
+                        MinimizeWindowButton(colors: buttonColors),
+                        MaximizeWindowButton(colors: buttonColors),
+                        CloseWindowButton(colors: closeButtonColors),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      child: DeviceFrame(
-                        device: Devices.ios.iPhone13ProMax,
-                        isFrameVisible: true,
-                        orientation: MediaQuery.of(context).orientation,
-                        screen: const MyHomePage(title: "title"),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Center(
+                  child: DeviceFrame(
+                    device: Devices.ios.iPhone13ProMax,
+                    isFrameVisible: true,
+                    orientation: MediaQuery.of(context).orientation,
+                    screen: const MyHomePage(title: "title"),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     ),
   );
 
   doWhenWindowReady(() {
-    const initialSize = const Size(450, 1020);
-    appWindow.minSize = initialSize;
+    const initialSize = Size(450, 980); 
+    appWindow.minSize = Size(350, 350);
     appWindow.size = initialSize;
     appWindow.alignment = Alignment.center;
     appWindow.show();
@@ -185,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           // botom
           Positioned(
-            bottom: 10,
+            bottom: 5,
             right: bottomBar,
             left: bottomBar,
             child: Container(
