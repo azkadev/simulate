@@ -22,30 +22,32 @@ final closeButtonColors = WindowButtonColors(
   iconMouseOver: Colors.white,
 );
 
-void main() async {
+void simulateApp({Widget? home}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Window.initialize();
   await Window.setEffect(
     effect: WindowEffect.transparent,
   );
-  runApp(
-    MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      debugShowMaterialGrid: false,
-      showPerformanceOverlay: false,
-      home: Builder(
-        builder: (BuildContext context) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
+
+  runApp(MaterialApp(
+    title: 'Flutter Demo',
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+    ),
+    debugShowCheckedModeBanner: false,
+    debugShowMaterialGrid: false,
+    showPerformanceOverlay: false,
+    home: Builder(
+      builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Container(
                   height: 50,
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(5),
@@ -91,28 +93,31 @@ void main() async {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Center(
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                child: Center(
                   child: DeviceFrame(
                     device: Devices.ios.iPhone13ProMax,
                     isFrameVisible: true,
                     orientation: MediaQuery.of(context).orientation,
-                    screen: const MyHomePage(title: "title"),
+                    screen: MyHomePage(title: "title", home: home),
                   ),
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     ),
-  );
+  ));
 
   doWhenWindowReady(() {
-    const initialSize = Size(450, 980); 
-    appWindow.minSize = Size(350, 350);
+    const initialSize = Size(450, 980);
+    appWindow.minSize = const Size(350, 350);
     appWindow.size = initialSize;
     appWindow.alignment = Alignment.center;
     appWindow.show();
@@ -120,9 +125,11 @@ void main() async {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, this.home})
+      : super(key: key);
 
   final String title;
+  final Widget? home;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -139,15 +146,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Scaffold(
-            body: Center(
-              child: Text("Hello world"),
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              child: const Icon(Iconsax.play),
-            ),
-          ),
+          widget.home ??
+              Scaffold(
+                body: const Center(
+                  child: Text("Hello world"),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {},
+                  child: const Icon(Iconsax.play),
+                ),
+              ),
 
           // status_bar
           Positioned(
