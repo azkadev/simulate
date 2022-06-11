@@ -2,6 +2,15 @@
 
 Simulate your project flutter on cross platform with frame device ( android , ios, desktop ) on your os without heavy vm
 
+## Demo
+
+
+
+https://user-images.githubusercontent.com/82513502/173173590-9b3a4d3e-484b-4508-baf8-9bd8cb49b35f.mp4
+
+
+
+
 ## Screenshot
 
 ![](https://raw.githubusercontent.com/azkadev/simulate/main/screenshot/screenshot.png)
