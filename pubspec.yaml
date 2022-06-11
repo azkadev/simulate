@@ -1,6 +1,6 @@
 name: simulate
 description: Simulate your project app .
-version: 0.0.1
+version: 0.0.4
 homepage: https://github.com/azkadev/simulate/tree/main/docs
 repository: https://github.com/azkadev/simulate
 issue_tracker: https://github.com/azkadev/simulate/issues
@@ -12,12 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
  
-  cupertino_icons: ^1.0.2
-  device_frame: ^1.0.0
+  cupertino_icons: ^1.0.5
+  device_frame: ^1.1.0
   iconsax: ^0.0.8
   flutter_remix: ^0.0.3
   flutter_acrylic: ^1.0.0+2
-  bitsdojo_window: ^0.1.1+1
+  bitsdojo_window: ^0.1.2
 
 
 dev_dependencies:
@@ -29,7 +29,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

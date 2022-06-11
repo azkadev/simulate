@@ -2,27 +2,13 @@
 
 import 'package:simulate/simulate.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 void main() {
-  bool is_run_simulate = true;
-  if (is_run_simulate) {
-    simulateApp(
-      home: const MyPage(),
-    );
-  } else {
-    runApp(
-      MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        debugShowMaterialGrid: false,
-        showPerformanceOverlay: false,
-        home: const MyPage(),
-      ),
-    );
-  }
+  autoSimulateApp(
+    debugShowCheckedModeBanner: false,
+    home: const MyPage(),
+  );
 }
 
 class MyPage extends StatefulWidget {
@@ -36,20 +22,68 @@ class _MyPageState extends State<MyPage> {
   var count = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return scaffoldSimulate(
+      device: Devices.android.samsungGalaxyNote20Ultra,
       body: Center(
         child: Text(
           "hello $count",
           style: const TextStyle(color: Colors.black, fontSize: 50),
         ),
       ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: "azka",
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return SignPage();
+              }));
+            },
+            child: const Icon(Iconsax.backward),
+          ),
+          const SizedBox(width: 20,),
+          FloatingActionButton(
+            heroTag: "baru",
+            onPressed: () {
+              setState(() {
+                count++;
+              });
+
+            },
+            child: const Icon(Iconsax.add_circle),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SignPage extends StatefulWidget {
+  SignPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignPage> createState() => _SignPageState();
+}
+
+class _SignPageState extends State<SignPage> {
+  @override
+  Widget build(BuildContext context) {
+    return scaffoldSimulate(
+      body: const Center(
+        child: Text(
+          "Sign Page",
+          style: TextStyle(color: Colors.black, fontSize: 50),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "baru azka",
         onPressed: () {
-          setState(() {
-            count++;
-          });
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const MyPage();
+          }));
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Iconsax.backward),
       ),
     );
   }
