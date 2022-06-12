@@ -74,7 +74,7 @@ void main() async {
   //     emitter: emitter,
   //   ),
   // );
-  runSimulate(home: MyPage(emitter: emitter),debugShowCheckedModeBanner: false);
+  runSimulate(home: MyPage(emitter: emitter), debugShowCheckedModeBanner: false);
 }
 
 class MyPage extends StatefulWidget {

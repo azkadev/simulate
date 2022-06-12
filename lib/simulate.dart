@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
 import 'dart:typed_data';
@@ -10,11 +10,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:file_picker/file_picker.dart';
 export 'package:device_frame/device_frame.dart';
 
 final buttonColors = WindowButtonColors(
@@ -549,6 +548,9 @@ class ScaffoldSimulate extends StatefulWidget {
     this.endDrawerEnableOpenDragGesture = true,
     this.restorationId,
     this.device,
+    this.isShowFrame = kDebugMode,
+    this.preferredSize = const Size.fromHeight(26),
+    this.paddingFrame = const EdgeInsets.all(10),
   }) : super(key: key);
   final Widget body;
   final PreferredSizeWidget? appBar;
@@ -573,23 +575,32 @@ class ScaffoldSimulate extends StatefulWidget {
   final bool drawerEnableOpenDragGesture;
   final bool endDrawerEnableOpenDragGesture;
   final String? restorationId;
-  final bool isShowFrame = kDebugMode;
+  final bool isShowFrame;
   final DeviceInfo? device;
-  final Size preferredSize = const Size.fromHeight(26);
-  final EdgeInsets paddingFrame = const EdgeInsets.symmetric(horizontal: 5);
+  final Size preferredSize;
+  final EdgeInsets paddingFrame;
 
   @override
   State<ScaffoldSimulate> createState() => _ScaffoldSimulateState();
 }
 
 class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
-  late bool is_show_top_bar = true;
+  late DeviceInfo device = Devices.ios.iPhone13ProMax;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.device != null) {
+      setState(() {
+        device = widget.device!;
+      });
+    }
+  }
+
   GlobalKey globalKey = GlobalKey();
   GlobalKey newglobalKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    Size preferredSize = const Size.fromHeight(26);
-    EdgeInsets paddingFrame = const EdgeInsets.all(5);
     double bottomBar = 150;
     if (MediaQuery.of(context).orientation == Orientation.landscape) {
       bottomBar = 350;
@@ -638,17 +649,57 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
       )
     ];
 
+    if (widget.appBar != null) {
+      topBars.add(widget.appBar as Widget);
+    }
+    if (widget.bottomNavigationBar != null) {
+      bottomBars.insert(0, widget.bottomNavigationBar as Widget);
+    }
     PreferredSizeWidget? appBarLatest;
 
-    appBarLatest = PreferredSize(
-      preferredSize: preferredSize,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: topBars,
-      ),
-    );
+    if (widget.isShowFrame) {
+      appBarLatest = PreferredSize(
+        preferredSize: widget.preferredSize,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: (topBars is List<Widget>) ? topBars : [],
+        ),
+      );
+    } else {
+      appBarLatest = widget.appBar;
+    }
+
+    if (!widget.isShowFrame) {
+      return Scaffold(
+        key: widget.key,
+        floatingActionButton: widget.floatingActionButton,
+        floatingActionButtonLocation: widget.floatingActionButtonLocation,
+        floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
+        persistentFooterButtons: widget.persistentFooterButtons,
+        drawer: widget.drawer,
+        onDrawerChanged: widget.onDrawerChanged,
+        endDrawer: widget.endDrawer,
+        onEndDrawerChanged: widget.onEndDrawerChanged,
+        bottomSheet: widget.bottomSheet,
+        resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+        primary: widget.primary,
+        drawerDragStartBehavior: widget.drawerDragStartBehavior,
+        extendBody: widget.extendBody,
+        extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
+        drawerScrimColor: widget.drawerScrimColor,
+        drawerEdgeDragWidth: widget.drawerEdgeDragWidth,
+        drawerEnableOpenDragGesture: widget.drawerEnableOpenDragGesture,
+        endDrawerEnableOpenDragGesture: widget.endDrawerEnableOpenDragGesture,
+        restorationId: widget.restorationId,
+        backgroundColor: widget.backgroundColor,
+        appBar: widget.appBar,
+        body: widget.body,
+        bottomNavigationBar: widget.bottomNavigationBar,
+      );
+    }
+
     return RepaintBoundary(
       key: globalKey,
       child: Scaffold(
@@ -681,32 +732,27 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
                     children: [
                       PopupMenuButton(
                         child: const Center(
-                            child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "iPhone 13 Pro Max",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "iPhone 13 Pro Max",
+                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                            ),
                           ),
-                        )),
+                        ),
                         itemBuilder: (BuildContext context) {
-                          return ['A', 'B', 'C', 'D']
-                              .map((e) => PopupMenuItem<String>(
-                                    child: PopupMenuButton(
-                                        child: const Center(
-                                            child: Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('SubMenu'),
-                                        )),
-                                        itemBuilder: (BuildContext context) {
-                                          return [1, 2, 3, 4]
-                                              .map((e) => PopupMenuItem<int>(
-                                                    value: e,
-                                                    child: Text(e.toString()),
-                                                  ))
-                                              .toList();
-                                        }),
-                                  ))
-                              .toList();
+                          return Devices.all.map((DeviceInfo deviceInfo) {
+                            return PopupMenuItem(
+                              child: Text(
+                                deviceInfo.name,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  device = deviceInfo.copyWith.call();
+                                });
+                              },
+                            );
+                          }).toList();
                         },
                       ),
                       const Spacer(),
@@ -727,29 +773,36 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
                           return [
                             PopupMenuItem(
                               onTap: () async {
-                                RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
 
-                                ui.Image image = await boundary.toImage();
-                                ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                Uint8List pngBytes = byteData!.buffer.asUint8List();
-                                var file = File("/home/hexaminate/photo.png");
-                                await file.writeAsBytes(pngBytes);
-                                print("oke");
+                                if (selectedDirectory != null) {
+                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                                  RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                  ui.Image image = await boundary.toImage();
+                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                  var file = File(getPathFile);
+                                  await file.writeAsBytes(pngBytes);
+                                }
                               },
                               child: const Text("Screenshot"),
                             ),
                             PopupMenuItem(
                               onTap: () async {
-                                await Future.delayed(Duration(microseconds: 1));
-                                RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                                if (selectedDirectory != null) {
+                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
 
-                                ui.Image image = await boundary.toImage();
-                                ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                Uint8List pngBytes = byteData!.buffer.asUint8List();
-                                var file = File("/home/hexaminate/photo.png");
-                                await file.writeAsBytes(pngBytes);
-                                print("oke");
-                                await Future.delayed(Duration(microseconds: 1));
+                                  RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                  ui.Image image = await boundary.toImage();
+                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                  var file = File(getPathFile);
+                                  await file.writeAsBytes(pngBytes);
+                                }
                               },
                               child: const Text("Screenshot without bar"),
                             ),
@@ -770,43 +823,35 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
             RepaintBoundary(
               key: newglobalKey,
               child: Padding(
-                padding: paddingFrame,
+                padding: widget.paddingFrame,
                 child: Center(
                   child: DeviceFrame(
-                    device: Devices.ios.iPhone13ProMax,
-                    isFrameVisible: true,
+                    device: device,
                     orientation: MediaQuery.of(context).orientation,
                     screen: Scaffold(
-                      backgroundColor: Colors.transparent,
-                      body: chooseWidget(
-                        isMain: true,
-                        main: Scaffold(
-                          floatingActionButton: widget.floatingActionButton,
-                          floatingActionButtonLocation: widget.floatingActionButtonLocation,
-                          floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
-                          persistentFooterButtons: widget.persistentFooterButtons,
-                          drawer: widget.drawer,
-                          onDrawerChanged: widget.onDrawerChanged,
-                          endDrawer: widget.endDrawer,
-                          onEndDrawerChanged: widget.onEndDrawerChanged,
-                          bottomSheet: widget.bottomSheet,
-                          resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-                          primary: widget.primary,
-                          drawerDragStartBehavior: widget.drawerDragStartBehavior,
-                          extendBody: widget.extendBody,
-                          extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
-                          drawerScrimColor: widget.drawerScrimColor,
-                          drawerEdgeDragWidth: widget.drawerEdgeDragWidth,
-                          drawerEnableOpenDragGesture: widget.drawerEnableOpenDragGesture,
-                          endDrawerEnableOpenDragGesture: widget.endDrawerEnableOpenDragGesture,
-                          restorationId: widget.restorationId,
-                          backgroundColor: widget.backgroundColor,
-                          appBar: appBarLatest,
-                          body: widget.body,
-                          bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: bottomBars),
-                        ),
-                        second: widget.body,
-                      ),
+                      floatingActionButton: widget.floatingActionButton,
+                      floatingActionButtonLocation: widget.floatingActionButtonLocation,
+                      floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
+                      persistentFooterButtons: widget.persistentFooterButtons,
+                      drawer: widget.drawer,
+                      onDrawerChanged: widget.onDrawerChanged,
+                      endDrawer: widget.endDrawer,
+                      onEndDrawerChanged: widget.onEndDrawerChanged,
+                      bottomSheet: widget.bottomSheet,
+                      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+                      primary: widget.primary,
+                      drawerDragStartBehavior: widget.drawerDragStartBehavior,
+                      extendBody: widget.extendBody,
+                      extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
+                      drawerScrimColor: widget.drawerScrimColor,
+                      drawerEdgeDragWidth: widget.drawerEdgeDragWidth,
+                      drawerEnableOpenDragGesture: widget.drawerEnableOpenDragGesture,
+                      endDrawerEnableOpenDragGesture: widget.endDrawerEnableOpenDragGesture,
+                      restorationId: widget.restorationId,
+                      backgroundColor: widget.backgroundColor,
+                      appBar: appBarLatest,
+                      body: widget.body,
+                      bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: (bottomBars is List<Widget>) ? bottomBars : []),
                     ),
                   ),
                 ),
