@@ -1,17 +1,22 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/foundation.dart';
 
 export 'package:device_frame/device_frame.dart';
+
 final buttonColors = WindowButtonColors(
   iconNormal: const Color(0xFF805306),
   mouseOver: const Color(0xFFF6A00C),
@@ -249,10 +254,343 @@ void autoSimulateApp({
   }
 }
 
-Widget scaffoldSimulate({Key? key, PreferredSizeWidget? appBar, required Widget body, Widget? floatingActionButton, FloatingActionButtonLocation? floatingActionButtonLocation, FloatingActionButtonAnimator? floatingActionButtonAnimator, List<Widget>? persistentFooterButtons, Widget? drawer, void Function(bool)? onDrawerChanged, Widget? endDrawer, void Function(bool)? onEndDrawerChanged, Widget? bottomNavigationBar, Widget? bottomSheet, Color? backgroundColor, bool? resizeToAvoidBottomInset, bool primary = true, DragStartBehavior drawerDragStartBehavior = DragStartBehavior.start, bool extendBody = false, bool extendBodyBehindAppBar = false, Color? drawerScrimColor, double? drawerEdgeDragWidth, bool drawerEnableOpenDragGesture = true, bool endDrawerEnableOpenDragGesture = true, String? restorationId, bool isShowFrame = kDebugMode, DeviceInfo? device}) {
-  return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-    double bottomBar = 150;
+void runSimulate({
+  Key? key,
+  GlobalKey<NavigatorState>? navigatorKey,
+  GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey,
+  required Widget home,
+  Map<String, Widget Function(BuildContext)> routes = const <String, WidgetBuilder>{},
+  String? initialRoute,
+  Route<dynamic>? Function(RouteSettings)? onGenerateRoute,
+  List<Route<dynamic>> Function(String)? onGenerateInitialRoutes,
+  Route<dynamic>? Function(RouteSettings)? onUnknownRoute,
+  List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+  Widget Function(BuildContext, Widget?)? builder,
+  String title = '',
+  String Function(BuildContext)? onGenerateTitle,
+  Color? color,
+  ThemeData? theme,
+  ThemeData? darkTheme,
+  ThemeData? highContrastTheme,
+  ThemeData? highContrastDarkTheme,
+  ThemeMode? themeMode = ThemeMode.system,
+  Locale? locale,
+  Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates,
+  Locale? Function(List<Locale>?, Iterable<Locale>)? localeListResolutionCallback,
+  Locale? Function(Locale?, Iterable<Locale>)? localeResolutionCallback,
+  Iterable<Locale> supportedLocales = const <Locale>[Locale('en', 'US')],
+  bool debugShowMaterialGrid = false,
+  bool showPerformanceOverlay = false,
+  bool checkerboardRasterCacheImages = false,
+  bool checkerboardOffscreenLayers = false,
+  bool showSemanticsDebugger = false,
+  bool debugShowCheckedModeBanner = true,
+  Map<ShortcutActivator, Intent>? shortcuts,
+  Map<Type, Action<Intent>>? actions,
+  String? restorationScopeId,
+  ScrollBehavior? scrollBehavior,
+  bool useInheritedMediaQuery = false,
+  bool isShowFrame = kDebugMode,
+}) async {
+  autoSimulateApp(key: key, navigatorKey: navigatorKey, scaffoldMessengerKey: scaffoldMessengerKey, home: home, routes: routes, initialRoute: initialRoute, onGenerateRoute: onGenerateRoute, onGenerateInitialRoutes: onGenerateInitialRoutes, onUnknownRoute: onUnknownRoute, navigatorObservers: navigatorObservers, builder: builder, title: title, onGenerateTitle: onGenerateTitle, color: color, theme: theme, darkTheme: darkTheme, highContrastTheme: highContrastTheme, highContrastDarkTheme: highContrastDarkTheme, themeMode: themeMode, locale: locale, localizationsDelegates: localizationsDelegates, localeListResolutionCallback: localeListResolutionCallback, localeResolutionCallback: localeResolutionCallback, supportedLocales: supportedLocales, debugShowMaterialGrid: debugShowMaterialGrid, showPerformanceOverlay: showPerformanceOverlay, checkerboardRasterCacheImages: checkerboardRasterCacheImages, checkerboardOffscreenLayers: checkerboardOffscreenLayers, showSemanticsDebugger: showSemanticsDebugger, debugShowCheckedModeBanner: debugShowCheckedModeBanner, shortcuts: shortcuts, actions: actions, restorationScopeId: restorationScopeId, scrollBehavior: scrollBehavior, useInheritedMediaQuery: useInheritedMediaQuery, isShowFrame: isShowFrame);
+}
 
+// Widget ScaffoldSimulate({
+//   GlobalKey? key,
+//   PreferredSizeWidget? appBar,
+//   required Widget body,
+//   Widget? floatingActionButton,
+//   FloatingActionButtonLocation? floatingActionButtonLocation,
+//   FloatingActionButtonAnimator? floatingActionButtonAnimator,
+//   List<Widget>? persistentFooterButtons,
+//   Widget? drawer,
+//   void Function(bool)? onDrawerChanged,
+//   Widget? endDrawer,
+//   void Function(bool)? onEndDrawerChanged,
+//   Widget? bottomNavigationBar,
+//   Widget? bottomSheet,
+//   Color? backgroundColor,
+//   bool? resizeToAvoidBottomInset,
+//   bool primary = true,
+//   DragStartBehavior drawerDragStartBehavior = DragStartBehavior.start,
+//   bool extendBody = false,
+//   bool extendBodyBehindAppBar = false,
+//   Color? drawerScrimColor,
+//   double? drawerEdgeDragWidth,
+//   bool drawerEnableOpenDragGesture = true,
+//   bool endDrawerEnableOpenDragGesture = true,
+//   String? restorationId,
+//   bool isShowFrame = kDebugMode,
+//   DeviceInfo? device,
+//   Size preferredSize = const Size.fromHeight(26),
+//   EdgeInsets paddingFrame = const EdgeInsets.symmetric(horizontal: 5),
+// }) {
+//   if (isShowFrame) {
+//     if (Platform.isAndroid) {
+//       isShowFrame = false;
+//     } else if (Platform.isIOS) {
+//       isShowFrame = false;
+//     }
+//   }
+//   if (!isShowFrame) {
+//     return Scaffold(
+//       key: key,
+//       floatingActionButton: floatingActionButton,
+//       floatingActionButtonLocation: floatingActionButtonLocation,
+//       floatingActionButtonAnimator: floatingActionButtonAnimator,
+//       persistentFooterButtons: persistentFooterButtons,
+//       drawer: drawer,
+//       onDrawerChanged: onDrawerChanged,
+//       endDrawer: endDrawer,
+//       onEndDrawerChanged: onEndDrawerChanged,
+//       bottomSheet: bottomSheet,
+//       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+//       primary: primary,
+//       drawerDragStartBehavior: drawerDragStartBehavior,
+//       extendBody: extendBody,
+//       extendBodyBehindAppBar: extendBodyBehindAppBar,
+//       drawerScrimColor: drawerScrimColor,
+//       drawerEdgeDragWidth: drawerEdgeDragWidth,
+//       drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+//       endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+//       restorationId: restorationId,
+//       backgroundColor: backgroundColor,
+//       appBar: appBar,
+//       body: body,
+//       bottomNavigationBar: bottomNavigationBar,
+//     );
+//   }
+
+//   return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+//     double bottomBar = 150;
+//     if (MediaQuery.of(context).orientation == Orientation.landscape) {
+//       bottomBar = 350;
+//     }
+//     List<Widget> topBars = [
+//       Container(
+//         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+//         child: Row(
+//           crossAxisAlignment: CrossAxisAlignment.end,
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: const [
+//             SizedBox(
+//               width: 10,
+//             ),
+//             Text(
+//               "6:09",
+//               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+//             ),
+//             Spacer(),
+//             Icon(
+//               CupertinoIcons.wifi,
+//             ),
+//             SizedBox(
+//               width: 5,
+//             ),
+//             Icon(
+//               CupertinoIcons.battery_full,
+//             ),
+//           ],
+//         ),
+//       ),
+//     ];
+//     List<Widget> bottomBars = [
+//       Padding(
+//         padding: EdgeInsets.symmetric(horizontal: bottomBar),
+//         child: Container(
+//           height: 5,
+//           decoration: BoxDecoration(
+//             color: Colors.grey.shade800,
+//             borderRadius: BorderRadius.circular(10),
+//           ),
+//         ),
+//       ),
+//       const SizedBox(
+//         height: 5,
+//       )
+//     ];
+
+//     if (appBar != null) {
+//       topBars.add(appBar);
+//     }
+//     if (bottomNavigationBar != null) {
+//       bottomBars.insert(0, bottomNavigationBar);
+//     }
+//     PreferredSizeWidget? appBarLatest;
+
+//     if (isShowFrame) {
+//       appBarLatest = PreferredSize(
+//         preferredSize: preferredSize,
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           mainAxisSize: MainAxisSize.min,
+//           children: topBars,
+//         ),
+//       );
+//     } else {
+//       appBarLatest = appBar;
+//     }
+//     return Scaffold(
+//       backgroundColor: Colors.transparent,
+//       body: chooseWidget(
+//         isMain: isShowFrame,
+//         main: Padding(
+//           padding: paddingFrame,
+//           child: Center(
+//             child: DeviceFrame(
+//               device: device ?? Devices.ios.iPhone13ProMax,
+//               isFrameVisible: true,
+//               orientation: MediaQuery.of(context).orientation,
+//               screen: Scaffold(
+//                 floatingActionButton: floatingActionButton,
+//                 floatingActionButtonLocation: floatingActionButtonLocation,
+//                 floatingActionButtonAnimator: floatingActionButtonAnimator,
+//                 persistentFooterButtons: persistentFooterButtons,
+//                 drawer: drawer,
+//                 onDrawerChanged: onDrawerChanged,
+//                 endDrawer: endDrawer,
+//                 onEndDrawerChanged: onEndDrawerChanged,
+//                 bottomSheet: bottomSheet,
+//                 resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+//                 primary: primary,
+//                 drawerDragStartBehavior: drawerDragStartBehavior,
+//                 extendBody: extendBody,
+//                 extendBodyBehindAppBar: extendBodyBehindAppBar,
+//                 drawerScrimColor: drawerScrimColor,
+//                 drawerEdgeDragWidth: drawerEdgeDragWidth,
+//                 drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+//                 endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+//                 restorationId: restorationId,
+//                 backgroundColor: backgroundColor,
+//                 appBar: appBarLatest,
+//                 body: body,
+//                 bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: bottomBars),
+//               ),
+//             ),
+//           ),
+//         ),
+//         second: body,
+//       ),
+//     );
+//   });
+// }
+
+/*
+class ScaffoldSimulate extends Scaffold {
+  ScaffoldSimulate({
+    super.key,
+    super.appBar,
+    super.body,
+    super.floatingActionButton,
+    super.floatingActionButtonLocation,
+    super.floatingActionButtonAnimator,
+    super.persistentFooterButtons,
+    super.drawer,
+    super.onDrawerChanged,
+    super.endDrawer,
+    super.onEndDrawerChanged,
+    super.bottomNavigationBar,
+    super.bottomSheet,
+    super.backgroundColor,
+    super.resizeToAvoidBottomInset,
+    super.primary,
+    super.drawerDragStartBehavior,
+    super.extendBody,
+    super.extendBodyBehindAppBar,
+    super.drawerScrimColor,
+    super.drawerEdgeDragWidth,
+    super.drawerEnableOpenDragGesture,
+    super.endDrawerEnableOpenDragGesture,
+    super.restorationId,
+    bool isShowFrame = kDebugMode,
+    DeviceInfo? device,
+    Size preferredSize = const Size.fromHeight(26),
+  });
+}
+*/
+
+Widget chooseWidget({
+  bool isMain = true,
+  required Widget main,
+  required Widget second,
+}) {
+  if (isMain) {
+    return main;
+  } else {
+    return second;
+  }
+}
+
+class ScaffoldSimulate extends StatefulWidget {
+  const ScaffoldSimulate({
+    Key? key,
+    required this.body,
+    this.appBar,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
+    this.floatingActionButtonAnimator,
+    this.persistentFooterButtons,
+    this.drawer,
+    this.onDrawerChanged,
+    this.endDrawer,
+    this.onEndDrawerChanged,
+    this.bottomNavigationBar,
+    this.bottomSheet,
+    this.backgroundColor,
+    this.resizeToAvoidBottomInset,
+    this.primary = true,
+    this.drawerDragStartBehavior = DragStartBehavior.start,
+    this.extendBody = false,
+    this.extendBodyBehindAppBar = false,
+    this.drawerScrimColor,
+    this.drawerEdgeDragWidth,
+    this.drawerEnableOpenDragGesture = true,
+    this.endDrawerEnableOpenDragGesture = true,
+    this.restorationId,
+    this.device,
+  }) : super(key: key);
+  final Widget body;
+  final PreferredSizeWidget? appBar;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final FloatingActionButtonAnimator? floatingActionButtonAnimator;
+  final List<Widget>? persistentFooterButtons;
+  final Widget? drawer;
+  final void Function(bool)? onDrawerChanged;
+  final Widget? endDrawer;
+  final void Function(bool)? onEndDrawerChanged;
+  final Widget? bottomNavigationBar;
+  final Widget? bottomSheet;
+  final Color? backgroundColor;
+  final bool? resizeToAvoidBottomInset;
+  final bool primary;
+  final DragStartBehavior drawerDragStartBehavior;
+  final bool extendBody;
+  final bool extendBodyBehindAppBar;
+  final Color? drawerScrimColor;
+  final double? drawerEdgeDragWidth;
+  final bool drawerEnableOpenDragGesture;
+  final bool endDrawerEnableOpenDragGesture;
+  final String? restorationId;
+  final bool isShowFrame = kDebugMode;
+  final DeviceInfo? device;
+  final Size preferredSize = const Size.fromHeight(26);
+  final EdgeInsets paddingFrame = const EdgeInsets.symmetric(horizontal: 5);
+
+  @override
+  State<ScaffoldSimulate> createState() => _ScaffoldSimulateState();
+}
+
+class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
+  late bool is_show_top_bar = true;
+  GlobalKey globalKey = GlobalKey();
+  GlobalKey newglobalKey = GlobalKey();
+  @override
+  Widget build(BuildContext context) {
+    Size preferredSize = const Size.fromHeight(26);
+    EdgeInsets paddingFrame = const EdgeInsets.all(5);
+    double bottomBar = 150;
     if (MediaQuery.of(context).orientation == Orientation.landscape) {
       bottomBar = 350;
     }
@@ -295,22 +633,27 @@ Widget scaffoldSimulate({Key? key, PreferredSizeWidget? appBar, required Widget 
           ),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         height: 5,
       )
     ];
 
-    if (appBar != null) {
-      topBars.insert(0, appBar);
-    }
-    if (bottomNavigationBar != null) {
-      bottomBars.insert(0, bottomNavigationBar);
-    }
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: chooseWidget(
-        isMain: isShowFrame,
-        main: Column(
+    PreferredSizeWidget? appBarLatest;
+
+    appBarLatest = PreferredSize(
+      preferredSize: preferredSize,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: topBars,
+      ),
+    );
+    return RepaintBoundary(
+      key: globalKey,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -336,21 +679,83 @@ Widget scaffoldSimulate({Key? key, PreferredSizeWidget? appBar, required Widget 
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
+                      PopupMenuButton(
+                        child: const Center(
+                            child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
                             "iPhone 13 Pro Max",
                             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
                           ),
-                          Text(
-                            "ios 14.4",
-                            style: TextStyle(color: Color.fromARGB(255, 105, 104, 104), fontWeight: FontWeight.w500),
-                          )
-                        ],
+                        )),
+                        itemBuilder: (BuildContext context) {
+                          return ['A', 'B', 'C', 'D']
+                              .map((e) => PopupMenuItem<String>(
+                                    child: PopupMenuButton(
+                                        child: const Center(
+                                            child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text('SubMenu'),
+                                        )),
+                                        itemBuilder: (BuildContext context) {
+                                          return [1, 2, 3, 4]
+                                              .map((e) => PopupMenuItem<int>(
+                                                    value: e,
+                                                    child: Text(e.toString()),
+                                                  ))
+                                              .toList();
+                                        }),
+                                  ))
+                              .toList();
+                        },
                       ),
                       const Spacer(),
+                      PopupMenuButton(
+                        onSelected: (data) {
+                          print(data);
+                        },
+                        child: const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Iconsax.camera,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem(
+                              onTap: () async {
+                                RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                ui.Image image = await boundary.toImage();
+                                ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                var file = File("/home/hexaminate/photo.png");
+                                await file.writeAsBytes(pngBytes);
+                                print("oke");
+                              },
+                              child: const Text("Screenshot"),
+                            ),
+                            PopupMenuItem(
+                              onTap: () async {
+                                await Future.delayed(Duration(microseconds: 1));
+                                RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                ui.Image image = await boundary.toImage();
+                                ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                var file = File("/home/hexaminate/photo.png");
+                                await file.writeAsBytes(pngBytes);
+                                print("oke");
+                                await Future.delayed(Duration(microseconds: 1));
+                              },
+                              child: const Text("Screenshot without bar"),
+                            ),
+                          ];
+                        },
+                      ),
                       MinimizeWindowButton(colors: buttonColors),
                       MaximizeWindowButton(colors: buttonColors),
                       CloseWindowButton(colors: closeButtonColors),
@@ -362,158 +767,54 @@ Widget scaffoldSimulate({Key? key, PreferredSizeWidget? appBar, required Widget 
             const SizedBox(
               height: 5,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1),
-              child: Center(
-                child: DeviceFrame(
-                  device: device ?? Devices.ios.iPhone13ProMax,
-                  isFrameVisible: true,
-                  orientation: MediaQuery.of(context).orientation,
-                  screen: Scaffold(
-                    key: key,
-                    floatingActionButton: floatingActionButton,
-                    floatingActionButtonLocation: floatingActionButtonLocation,
-                    floatingActionButtonAnimator: floatingActionButtonAnimator,
-                    persistentFooterButtons: persistentFooterButtons,
-                    drawer: drawer,
-                    onDrawerChanged: onDrawerChanged,
-                    endDrawer: endDrawer,
-                    onEndDrawerChanged: onEndDrawerChanged,
-                    bottomSheet: bottomSheet,
-                    resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-                    primary: primary,
-                    drawerDragStartBehavior: drawerDragStartBehavior,
-                    extendBody: extendBody,
-                    extendBodyBehindAppBar: extendBodyBehindAppBar,
-                    drawerScrimColor: drawerScrimColor,
-                    drawerEdgeDragWidth: drawerEdgeDragWidth,
-                    drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
-                    endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
-                    restorationId: restorationId,
-                    backgroundColor: backgroundColor,
-                    appBar: appBar,
-                    body: Stack(
-                      children: [
-                        body,
-                        // status_bar
-                        Positioned(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: topBars,
-                          ),
+            RepaintBoundary(
+              key: newglobalKey,
+              child: Padding(
+                padding: paddingFrame,
+                child: Center(
+                  child: DeviceFrame(
+                    device: Devices.ios.iPhone13ProMax,
+                    isFrameVisible: true,
+                    orientation: MediaQuery.of(context).orientation,
+                    screen: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      body: chooseWidget(
+                        isMain: true,
+                        main: Scaffold(
+                          floatingActionButton: widget.floatingActionButton,
+                          floatingActionButtonLocation: widget.floatingActionButtonLocation,
+                          floatingActionButtonAnimator: widget.floatingActionButtonAnimator,
+                          persistentFooterButtons: widget.persistentFooterButtons,
+                          drawer: widget.drawer,
+                          onDrawerChanged: widget.onDrawerChanged,
+                          endDrawer: widget.endDrawer,
+                          onEndDrawerChanged: widget.onEndDrawerChanged,
+                          bottomSheet: widget.bottomSheet,
+                          resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+                          primary: widget.primary,
+                          drawerDragStartBehavior: widget.drawerDragStartBehavior,
+                          extendBody: widget.extendBody,
+                          extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
+                          drawerScrimColor: widget.drawerScrimColor,
+                          drawerEdgeDragWidth: widget.drawerEdgeDragWidth,
+                          drawerEnableOpenDragGesture: widget.drawerEnableOpenDragGesture,
+                          endDrawerEnableOpenDragGesture: widget.endDrawerEnableOpenDragGesture,
+                          restorationId: widget.restorationId,
+                          backgroundColor: widget.backgroundColor,
+                          appBar: appBarLatest,
+                          body: widget.body,
+                          bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: bottomBars),
                         ),
-                      ],
+                        second: widget.body,
+                      ),
                     ),
-                    bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: bottomBars),
                   ),
                 ),
               ),
             ),
           ],
         ),
-        second: body,
       ),
     );
-  });
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title, this.home, this.bottomNavigationBar}) : super(key: key);
-
-  final String title;
-  final Widget? home;
-  final Widget? bottomNavigationBar;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    double bottomBar = 150;
-
-    if (MediaQuery.of(context).orientation == Orientation.landscape) {
-      bottomBar = 350;
-    }
-    List<Widget> bottomBars = [
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: bottomBar),
-        child: Container(
-          height: 5,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade800,
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 5,
-      )
-    ];
-
-    if (widget.bottomNavigationBar != null) {
-      bottomBars.insert(0, widget.bottomNavigationBar!);
-    }
-    return Scaffold(
-      body: Stack(
-        children: [
-          widget.home ??
-              Scaffold(
-                body: const Center(
-                  child: Text("Hello world"),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {},
-                  child: const Icon(Iconsax.play),
-                ),
-              ),
-
-          // status_bar
-          Positioned(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "6:09",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Icon(
-                    CupertinoIcons.wifi,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    CupertinoIcons.battery_full,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Column(mainAxisSize: MainAxisSize.min, children: bottomBars),
-    );
-  }
-}
-
-Widget chooseWidget({
-  bool isMain = true,
-  required Widget main,
-  required Widget second,
-}) {
-  if (isMain) {
-    return main;
-  } else {
-    return second;
   }
 }
