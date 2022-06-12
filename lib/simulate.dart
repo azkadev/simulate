@@ -731,12 +731,12 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       PopupMenuButton(
-                        child: const Center(
+                        child: Center(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "iPhone 13 Pro Max",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                              device.name,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),

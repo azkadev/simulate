@@ -21,3 +21,7 @@
 ## 0.0.5
 
 - update
+  
+## 0.0.6
+
+- add screenshot and add device 
