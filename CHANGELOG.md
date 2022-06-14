@@ -25,3 +25,11 @@
 ## 0.0.6
 
 - add screenshot and add device 
+  
+## 0.0.7
+
+- improve touchpad scroll
+  
+## 0.0.8
+
+- improve

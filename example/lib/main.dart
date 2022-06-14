@@ -89,10 +89,23 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldSimulate(
-      body: Center(
-        child: Text(
-          "hello $count",
-          style: const TextStyle(color: Colors.black, fontSize: 50),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width, minHeight: MediaQuery.of(context).size.height),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                  child: Text(
+                "hello $count",
+                style: const TextStyle(color: Colors.black, fontSize: 50),
+              )),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Row(
@@ -174,6 +187,8 @@ class _SignPageState extends State<SignPage> {
   Widget build(BuildContext context) {
     print("Sas");
     return ScaffoldSimulate(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
