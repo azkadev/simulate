@@ -94,8 +94,7 @@ void autoSimulateApp({
         effect: WindowEffect.transparent,
       );
     }
-  } else  {
-
+  } else {
     if (Platform.isAndroid) {
     } else if (Platform.isIOS) {
     } else {
@@ -274,8 +273,7 @@ void autoSimulateApp({
         appWindow.show();
       });
     }
-  } else  {
-
+  } else {
     if (Platform.isAndroid) {
     } else if (Platform.isIOS) {
     } else {
@@ -372,6 +370,7 @@ class ScaffoldSimulate extends StatefulWidget {
     this.restorationId,
     this.device,
     this.isShowFrame = kDebugMode,
+    this.isShowTopBar = kDebugMode,
     this.preferredSize = const Size.fromHeight(26),
     this.paddingFrame = const EdgeInsets.all(10),
   }) : super(key: key);
@@ -399,6 +398,7 @@ class ScaffoldSimulate extends StatefulWidget {
   final bool endDrawerEnableOpenDragGesture;
   final String? restorationId;
   final bool isShowFrame;
+  final bool isShowTopBar;
   final DeviceInfo? device;
   final Size preferredSize;
   final EdgeInsets paddingFrame;
@@ -408,7 +408,7 @@ class ScaffoldSimulate extends StatefulWidget {
 }
 
 class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
-  late DeviceInfo device = Devices.ios.iPhone13ProMax; 
+  late DeviceInfo device = Devices.ios.iPhone13ProMax;
   @override
   void initState() {
     super.initState();
@@ -417,7 +417,6 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
         device = widget.device!;
       });
     }
- 
   }
 
   GlobalKey globalKey = GlobalKey();
@@ -523,6 +522,9 @@ class _ScaffoldSimulateState extends State<ScaffoldSimulate> {
       );
     }
 
+    if (!widget.isShowTopBar) {
+      appBarLatest = widget.appBar;
+    }
     return RepaintBoundary(
       key: globalKey,
       child: Scaffold(
