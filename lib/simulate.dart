@@ -111,7 +111,9 @@ class _SimulateState extends State<Simulate> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               device.name,
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
@@ -150,16 +152,24 @@ class _SimulateState extends State<Simulate> {
                           return [
                             PopupMenuItem(
                               onTap: () async {
-                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                                String? selectedDirectory = await FilePicker
+                                    .platform
+                                    .getDirectoryPath();
 
                                 if (selectedDirectory != null) {
-                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+                                  var getPathFile =
+                                      "$selectedDirectory/${DateTime.now()}.png";
 
-                                  RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+                                  RenderRepaintBoundary boundary = globalKey
+                                          .currentContext!
+                                          .findRenderObject()
+                                      as RenderRepaintBoundary;
 
                                   ui.Image image = await boundary.toImage();
-                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                  ByteData? byteData = await image.toByteData(
+                                      format: ui.ImageByteFormat.png);
+                                  Uint8List pngBytes =
+                                      byteData!.buffer.asUint8List();
                                   var file = File(getPathFile);
                                   await file.writeAsBytes(pngBytes);
                                 }
@@ -168,15 +178,23 @@ class _SimulateState extends State<Simulate> {
                             ),
                             PopupMenuItem(
                               onTap: () async {
-                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                                String? selectedDirectory = await FilePicker
+                                    .platform
+                                    .getDirectoryPath();
                                 if (selectedDirectory != null) {
-                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+                                  var getPathFile =
+                                      "$selectedDirectory/${DateTime.now()}.png";
 
-                                  RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+                                  RenderRepaintBoundary boundary = newglobalKey
+                                          .currentContext!
+                                          .findRenderObject()
+                                      as RenderRepaintBoundary;
 
                                   ui.Image image = await boundary.toImage();
-                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                  ByteData? byteData = await image.toByteData(
+                                      format: ui.ImageByteFormat.png);
+                                  Uint8List pngBytes =
+                                      byteData!.buffer.asUint8List();
                                   var file = File(getPathFile);
                                   await file.writeAsBytes(pngBytes);
                                 }
