@@ -43,6 +43,208 @@ class MyScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
+// class Simulate extends StatefulWidget {
+//   Simulate({Key? key}) : super(key: key);
+
+//   @override
+//   State<Simulate> createState() => _SimulateState();
+// }
+
+// class _SimulateState extends State<Simulate> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(home: SimulateApp());
+//   }
+// }
+
+// class SimulateApp extends StatelessWidget {
+//   const SimulateApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(home: SimulateApp());
+//   }
+// }
+
+class SimulateApp extends StatefulWidget {
+  SimulateApp({Key? key}) : super(key: key);
+
+  @override
+  State<SimulateApp> createState() => _SimulateAppState();
+}
+
+class _SimulateAppState extends State<SimulateApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: SimulateApp());
+  }
+}
+
+class Simulate extends StatefulWidget {
+  final Widget body;
+  Simulate({
+    Key? key,
+    required this.body,
+  });
+
+  @override
+  State<Simulate> createState() => _SimulateState();
+}
+
+class _SimulateState extends State<Simulate> {
+  late DeviceInfo device = Devices.ios.iPhone13ProMax;
+  GlobalKey globalKey = GlobalKey();
+  GlobalKey newglobalKey = GlobalKey();
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      key: globalKey,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+            minWidth: MediaQuery.of(context).size.width,
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Container(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  // padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: MoveWindow(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        PopupMenuButton(
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                device.name,
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                          itemBuilder: (BuildContext context) {
+                            return Devices.all.map((DeviceInfo deviceInfo) {
+                              return PopupMenuItem(
+                                child: Text(
+                                  "${deviceInfo.name} ${device.identifier.platform.name}",
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    device = deviceInfo.copyWith.call();
+                                  });
+                                },
+                              );
+                            }).toList();
+                          },
+                        ),
+                        const Spacer(),
+                        PopupMenuButton(
+                          onSelected: (data) {
+                            print(data);
+                          },
+                          child: const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Iconsax.camera,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              PopupMenuItem(
+                                onTap: () async {
+                                  String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+                                  if (selectedDirectory != null) {
+                                    var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                                    RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                    ui.Image image = await boundary.toImage();
+                                    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                    Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                    var file = File(getPathFile);
+                                    await file.writeAsBytes(pngBytes);
+                                  }
+                                },
+                                child: const Text("Screenshot"),
+                              ),
+                              PopupMenuItem(
+                                onTap: () async {
+                                  String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                                  if (selectedDirectory != null) {
+                                    var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                                    RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                    ui.Image image = await boundary.toImage();
+                                    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                    Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                    var file = File(getPathFile);
+                                    await file.writeAsBytes(pngBytes);
+                                  }
+                                },
+                                child: const Text("Screenshot without bar"),
+                              ),
+                            ];
+                          },
+                        ),
+                        
+                        MinimizeWindowButton(colors: buttonColors),
+                        MaximizeWindowButton(colors: buttonColors),
+                        CloseWindowButton(colors: closeButtonColors),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              RepaintBoundary(
+                key: newglobalKey,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(
+                    child: DeviceFrame(
+                      device: device,
+                      orientation: MediaQuery.of(context).orientation,
+                      screen: MaterialApp(
+                        home: widget.body,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 void autoSimulateApp({
   Key? key,
   GlobalKey<NavigatorState>? navigatorKey,
@@ -327,6 +529,61 @@ void runSimulate({
 }) async {
   scrollBehavior ??= MyScrollBehavior();
   autoSimulateApp(key: key, navigatorKey: navigatorKey, scaffoldMessengerKey: scaffoldMessengerKey, home: home, routes: routes, initialRoute: initialRoute, onGenerateRoute: onGenerateRoute, onGenerateInitialRoutes: onGenerateInitialRoutes, onUnknownRoute: onUnknownRoute, navigatorObservers: navigatorObservers, builder: builder, title: title, onGenerateTitle: onGenerateTitle, color: color, theme: theme, darkTheme: darkTheme, highContrastTheme: highContrastTheme, highContrastDarkTheme: highContrastDarkTheme, themeMode: themeMode, locale: locale, localizationsDelegates: localizationsDelegates, localeListResolutionCallback: localeListResolutionCallback, localeResolutionCallback: localeResolutionCallback, supportedLocales: supportedLocales, debugShowMaterialGrid: debugShowMaterialGrid, showPerformanceOverlay: showPerformanceOverlay, checkerboardRasterCacheImages: checkerboardRasterCacheImages, checkerboardOffscreenLayers: checkerboardOffscreenLayers, showSemanticsDebugger: showSemanticsDebugger, debugShowCheckedModeBanner: debugShowCheckedModeBanner, shortcuts: shortcuts, actions: actions, restorationScopeId: restorationScopeId, scrollBehavior: scrollBehavior, useInheritedMediaQuery: useInheritedMediaQuery, isShowFrame: isShowFrame);
+}
+
+void runAppSimulate(
+  Widget app, {
+  bool isShowFrame = kDebugMode,
+}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (isShowFrame) {
+    if (Platform.isAndroid) {
+    } else if (Platform.isIOS) {
+    } else {
+      await Window.initialize();
+      await Window.setEffect(
+        effect: WindowEffect.transparent,
+      );
+    }
+  } else {
+    if (Platform.isAndroid) {
+    } else if (Platform.isIOS) {
+    } else {
+      await Window.initialize();
+      await Window.setEffect(
+        effect: WindowEffect.transparent,
+      );
+    }
+  }
+
+  runApp(app);
+
+  if (isShowFrame) {
+    if (Platform.isAndroid) {
+    } else if (Platform.isIOS) {
+    } else {
+      doWhenWindowReady(() {
+        const initialSize = Size(450, 980);
+        appWindow.minSize = const Size(350, 350);
+        appWindow.size = initialSize;
+        appWindow.alignment = Alignment.center;
+        appWindow.show();
+      });
+    }
+  } else {
+    if (Platform.isAndroid) {
+    } else if (Platform.isIOS) {
+    } else {
+      doWhenWindowReady(() {
+        const initialSize = Size(450, 980);
+        appWindow.minSize = const Size(350, 350);
+        appWindow.size = initialSize;
+        appWindow.alignment = Alignment.center;
+        appWindow.show();
+      });
+    }
+  }
 }
 
 Widget chooseWidget({

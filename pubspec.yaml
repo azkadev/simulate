@@ -6,7 +6,7 @@ repository: https://github.com/azkadev/simulate
 issue_tracker: https://github.com/azkadev/simulate/issues
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.18.2 <3.0.0"
  
 dependencies:
   flutter:
