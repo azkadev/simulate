@@ -1,3 +1,6 @@
+## 0.0.11
+- update style code now add frame device more easy
+  
 ## 0.0.10
 - upgrade dependecies
   

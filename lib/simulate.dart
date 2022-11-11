@@ -49,17 +49,29 @@ class MyScrollBehavior extends MaterialScrollBehavior {
 /// simulate part
 class Simulate extends StatefulWidget {
   final MaterialApp home;
+  final DeviceInfo? deviceDefault;
   const Simulate({
     super.key,
     required this.home,
+    this.deviceDefault,
   });
 
   @override
   State<Simulate> createState() => _SimulateState();
 }
- 
+
 class _SimulateState extends State<Simulate> {
   late DeviceInfo device = Devices.ios.iPhone13ProMax;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.deviceDefault != null) {
+      setState(() {
+        device = widget.deviceDefault!;
+      });
+    }
+  }
+
   GlobalKey globalKey = GlobalKey();
   GlobalKey newglobalKey = GlobalKey();
   @override
@@ -187,18 +199,22 @@ class _SimulateState extends State<Simulate> {
             ),
             RepaintBoundary(
               key: newglobalKey,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Center(
-                  child: DeviceFrame(
-                    device: device,
-                    orientation: MediaQuery.of(context).orientation,
-                    screen: widget.home,
-                  ),
-                ),
-              ),
+              child: bodyDevice(),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget bodyDevice() {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Center(
+        child: DeviceFrame(
+          device: device,
+          orientation: MediaQuery.of(context).orientation,
+          screen: widget.home,
         ),
       ),
     );

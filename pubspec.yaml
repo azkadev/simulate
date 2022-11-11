@@ -1,6 +1,6 @@
 name: simulate
 description: Simulate your project app .
-version: 0.0.10
+version: 0.0.11
 homepage: https://github.com/azkadev/simulate/tree/main/docs
 repository: https://github.com/azkadev/simulate
 issue_tracker: https://github.com/azkadev/simulate/issues
