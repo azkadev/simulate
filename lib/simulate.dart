@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, overridden_fields
 
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -66,25 +66,13 @@ class MyScrollBehavior extends MaterialScrollBehavior {
 //   }
 // }
 
-class SimulateApp extends StatefulWidget {
-  SimulateApp({Key? key}) : super(key: key);
 
-  @override
-  State<SimulateApp> createState() => _SimulateAppState();
-}
-
-class _SimulateAppState extends State<SimulateApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: SimulateApp());
-  }
-}
 
 class Simulate extends StatefulWidget {
-  final Widget body;
-  Simulate({
+  final MaterialApp home;
+  const Simulate({
     Key? key,
-    required this.body,
+    required this.home,
   });
 
   @override
@@ -101,144 +89,137 @@ class _SimulateState extends State<Simulate> {
       key: globalKey,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height,
-            minWidth: MediaQuery.of(context).size.width,
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  // padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        spreadRadius: 0,
-                        blurRadius: 5,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 45,
+                // padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      spreadRadius: 0,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: MoveWindow(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      PopupMenuButton(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              device.name,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                        itemBuilder: (BuildContext context) {
+                          return Devices.all.map((DeviceInfo deviceInfo) {
+                            return PopupMenuItem(
+                              child: Text(
+                                "${deviceInfo.name} ${device.identifier.platform.name}",
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  device = deviceInfo.copyWith.call();
+                                });
+                              },
+                            );
+                          }).toList();
+                        },
                       ),
+                      const Spacer(),
+                      PopupMenuButton(
+                        onSelected: (data) {
+                          print(data);
+                        },
+                        child: const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Iconsax.camera,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem(
+                              onTap: () async {
+                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+                                if (selectedDirectory != null) {
+                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                                  RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                  ui.Image image = await boundary.toImage();
+                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                  var file = File(getPathFile);
+                                  await file.writeAsBytes(pngBytes);
+                                }
+                              },
+                              child: const Text("Screenshot"),
+                            ),
+                            PopupMenuItem(
+                              onTap: () async {
+                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                                if (selectedDirectory != null) {
+                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                                  RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                                  ui.Image image = await boundary.toImage();
+                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
+                                  var file = File(getPathFile);
+                                  await file.writeAsBytes(pngBytes);
+                                }
+                              },
+                              child: const Text("Screenshot without bar"),
+                            ),
+                          ];
+                        },
+                      ),
+                      MinimizeWindowButton(colors: buttonColors),
+                      MaximizeWindowButton(colors: buttonColors),
+                      CloseWindowButton(colors: closeButtonColors),
                     ],
                   ),
-                  clipBehavior: Clip.antiAlias,
-                  child: MoveWindow(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        PopupMenuButton(
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                device.name,
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ),
-                          itemBuilder: (BuildContext context) {
-                            return Devices.all.map((DeviceInfo deviceInfo) {
-                              return PopupMenuItem(
-                                child: Text(
-                                  "${deviceInfo.name} ${device.identifier.platform.name}",
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    device = deviceInfo.copyWith.call();
-                                  });
-                                },
-                              );
-                            }).toList();
-                          },
-                        ),
-                        const Spacer(),
-                        PopupMenuButton(
-                          onSelected: (data) {
-                            print(data);
-                          },
-                          child: const Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Iconsax.camera,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          itemBuilder: (BuildContext context) {
-                            return [
-                              PopupMenuItem(
-                                onTap: () async {
-                                  String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-
-                                  if (selectedDirectory != null) {
-                                    var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
-
-                                    RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-
-                                    ui.Image image = await boundary.toImage();
-                                    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                    Uint8List pngBytes = byteData!.buffer.asUint8List();
-                                    var file = File(getPathFile);
-                                    await file.writeAsBytes(pngBytes);
-                                  }
-                                },
-                                child: const Text("Screenshot"),
-                              ),
-                              PopupMenuItem(
-                                onTap: () async {
-                                  String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-                                  if (selectedDirectory != null) {
-                                    var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
-
-                                    RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-
-                                    ui.Image image = await boundary.toImage();
-                                    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                    Uint8List pngBytes = byteData!.buffer.asUint8List();
-                                    var file = File(getPathFile);
-                                    await file.writeAsBytes(pngBytes);
-                                  }
-                                },
-                                child: const Text("Screenshot without bar"),
-                              ),
-                            ];
-                          },
-                        ),
-                        
-                        MinimizeWindowButton(colors: buttonColors),
-                        MaximizeWindowButton(colors: buttonColors),
-                        CloseWindowButton(colors: closeButtonColors),
-                      ],
-                    ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            RepaintBoundary(
+              key: newglobalKey,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Center(
+                  child: DeviceFrame(
+                    device: device,
+                    orientation: MediaQuery.of(context).orientation,
+                    screen: 
+                    widget.home,
+                    
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              RepaintBoundary(
-                key: newglobalKey,
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Center(
-                    child: DeviceFrame(
-                      device: device,
-                      orientation: MediaQuery.of(context).orientation,
-                      screen: MaterialApp(
-                        home: widget.body,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

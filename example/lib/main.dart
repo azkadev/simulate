@@ -1,26 +1,28 @@
 // ignore_for_file: unused_local_variable, duplicate_ignore
 
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:simulate/simulate.dart';
 
 void main() {
   runAppSimulate(
-    App(),
+    const App(),
   );
 }
-
 class App extends StatelessWidget {
   const App({
     super.key,
   });
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Simulate(
-        body: Home(),
+        home: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          debugShowMaterialGrid: false,
+          showPerformanceOverlay: false,
+          home: Home(),
+        ),
       ),
     );
   }
@@ -28,7 +30,7 @@ class App extends StatelessWidget {
 
 class Home extends StatefulWidget {
   const Home({
-    Key? key,
+    super.key,
   });
 
   @override
@@ -39,7 +41,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: const Center(
         child: Text("Alow"),
       ),
       floatingActionButton: FloatingActionButton(
@@ -55,11 +57,11 @@ class _HomeState extends State<Home> {
             //   reverseTransitionDuration: Duration.zero,
             // ),
             MaterialPageRoute(builder: (context) {
-              return LoginScreen();
+              return const LoginScreen();
             }),
           );
         },
-        child: Icon(
+        child: const Icon(
           Icons.login,
         ),
       ),
@@ -68,7 +70,7 @@ class _HomeState extends State<Home> {
 }
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -83,12 +85,12 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back,
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text("Alow"),
       ),
     );
