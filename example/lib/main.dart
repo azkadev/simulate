@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:simulate/simulate.dart';
 
 void main() {
-  runAppSimulate(
+  initSimulate();
+  runApp(
     const App(),
   );
 }
+
 class App extends StatelessWidget {
   const App({
     super.key,
