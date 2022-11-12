@@ -3,6 +3,7 @@ on: [workflow_dispatch]
 
 jobs:
   build:
+    permissions: write-all
     name: Compile Program dart cross platform @azkadev
     runs-on: ${{ matrix.os }}
     strategy:
