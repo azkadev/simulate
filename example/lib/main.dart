@@ -1,9 +1,7 @@
 // ignore_for_file: unused_local_variable, duplicate_ignore
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:simulate/simulate.dart';
-
 void main() {
   if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
     initSimulate();
@@ -12,7 +10,6 @@ void main() {
     const App(),
   );
 }
-
 class App extends StatelessWidget {
   const App({
     super.key,
@@ -33,7 +30,6 @@ class App extends StatelessWidget {
     );
   }
 }
-
 class Home extends StatefulWidget {
   const Home({
     super.key,
@@ -42,7 +38,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
@@ -54,14 +49,6 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.push(
             context,
-
-            // PageRouteBuilder(
-            //   pageBuilder: (context, animation1, animation2) {
-            //     return LoginScreen();
-            //   },
-            //   transitionDuration: Duration.zero,
-            //   reverseTransitionDuration: Duration.zero,
-            // ),
             MaterialPageRoute(builder: (context) {
               return const LoginScreen();
             }),
@@ -80,7 +67,6 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
