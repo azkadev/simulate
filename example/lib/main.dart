@@ -1,10 +1,13 @@
 // ignore_for_file: unused_local_variable, duplicate_ignore
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:simulate/simulate.dart';
 
 void main() {
-  initSimulate();
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    initSimulate();
+  }
   runApp(
     const App(),
   );
@@ -19,6 +22,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Simulate(
+        isShowFrame: true, // set false for disabled
         home: MaterialApp(
           debugShowCheckedModeBanner: false,
           debugShowMaterialGrid: false,
@@ -70,7 +74,6 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 

@@ -10,6 +10,46 @@ Simulate your project flutter on cross platform with frame device ( android , io
 
 https://user-images.githubusercontent.com/82513502/173173590-9b3a4d3e-484b-4508-baf8-9bd8cb49b35f.mp4
 
+```bash
+flutter pub add simulate
+```
+```dart
+// ignore_for_file: unused_local_variable, duplicate_ignore
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:simulate/simulate.dart';
+
+void main() {
+  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
+    initSimulate();
+  }
+  runApp(
+    const App(),
+  );
+}
+
+class App extends StatelessWidget {
+  const App({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Simulate(
+        isShowFrame: true, // set false for disabled
+        home: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          debugShowMaterialGrid: false,
+          showPerformanceOverlay: false,
+          home: Home(),
+        ),
+      ),
+    );
+  }
+}
+```
+
 
 # For Windows apps
 
