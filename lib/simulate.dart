@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 export 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:device_frame/device_frame.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -51,9 +52,11 @@ class Simulate extends StatefulWidget {
   final Widget home;
   final DeviceInfo? deviceDefault;
   final bool isShowFrame;
+  final Widget Function(BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
   const Simulate({
     super.key,
     required this.home,
+    this.customView,
     this.deviceDefault,
     this.isShowFrame = kDebugMode,
   });
@@ -219,7 +222,7 @@ class _SimulateState extends State<Simulate> {
         child: DeviceFrame(
           device: device,
           orientation: MediaQuery.of(context).orientation,
-          screen: widget.home,
+          screen: (widget.customView != null) ? widget.customView!.call(context, widget.home, device) : widget.home,
         ),
       ),
     );
