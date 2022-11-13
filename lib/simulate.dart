@@ -66,7 +66,8 @@ class Simulate extends StatefulWidget {
 }
 
 class _SimulateState extends State<Simulate> {
-  late DeviceInfo device = Devices.ios.iPhone13ProMax;
+  DeviceInfo device = Devices.ios.iPhone13ProMax;
+  bool isEnable = true;
   @override
   void initState() {
     super.initState();
@@ -90,124 +91,65 @@ class _SimulateState extends State<Simulate> {
         backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 45,
-                // padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      spreadRadius: 0,
-                      blurRadius: 5,
+            StatusBarSimulate(
+              globalKey: globalKey,
+              newGlobalKey: newglobalKey,
+              child: Row(
+                children: [
+                  PopupMenuButton(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        device.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.clip,
+                      ),
                     ),
-                  ],
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: MoveWindow(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      PopupMenuButton(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              device.name,
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                        itemBuilder: (BuildContext context) {
-                          return Devices.all.map((DeviceInfo deviceInfo) {
-                            return PopupMenuItem(
-                              child: Text(
-                                "${deviceInfo.name} ${device.identifier.platform.name}",
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  device = deviceInfo.copyWith.call();
-                                });
-                              },
-                            );
-                          }).toList();
-                        },
-                      ),
-                      const Spacer(),
-                      PopupMenuButton(
-                        onSelected: (data) {
-                          if (kDebugMode) {
-                            print(data);
-                          }
-                        },
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Iconsax.camera,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem(
-                              onTap: () async {
-                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-
-                                if (selectedDirectory != null) {
-                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
-
-                                  RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-
-                                  ui.Image image = await boundary.toImage();
-                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
-                                  var file = File(getPathFile);
-                                  await file.writeAsBytes(pngBytes);
-                                }
-                              },
-                              child: const Text("Screenshot"),
-                            ),
-                            PopupMenuItem(
-                              onTap: () async {
-                                String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-                                if (selectedDirectory != null) {
-                                  var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
-
-                                  RenderRepaintBoundary boundary = newglobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-
-                                  ui.Image image = await boundary.toImage();
-                                  ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-                                  Uint8List pngBytes = byteData!.buffer.asUint8List();
-                                  var file = File(getPathFile);
-                                  await file.writeAsBytes(pngBytes);
-                                }
-                              },
-                              child: const Text("Screenshot without bar"),
-                            ),
-                          ];
-                        },
-                      ),
-                      MinimizeWindowButton(colors: buttonColors),
-                      MaximizeWindowButton(colors: buttonColors),
-                      CloseWindowButton(colors: closeButtonColors),
-                    ],
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        ...Devices.all
+                            .map((DeviceInfo deviceInfo) {
+                              return PopupMenuItem(
+                                child: Text(
+                                  "${deviceInfo.name} ${device.identifier.platform.name}",
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    device = deviceInfo.copyWith.call();
+                                  });
+                                },
+                              );
+                            })
+                            .toList()
+                            .cast<PopupMenuItem>(),
+                      ];
+                    },
                   ),
-                ),
+                  Spacer(),
+                  MaterialButton(
+                    minWidth: 0,
+                    onPressed: () {
+                      setState(() {
+                        isEnable = !isEnable;
+                      });
+                    },
+                    child: Icon(
+                      (isEnable) ? Icons.toggle_on : Icons.toggle_off,
+                      color: (isEnable) ? Colors.blue : Colors.white,
+                    ),
+                  ),
+                  
+                ],
               ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
-            RepaintBoundary(
-              key: newglobalKey,
-              child: bodyDevice(),
+            Expanded(
+              child: RepaintBoundary(
+                key: newglobalKey,
+                child: bodyDevice(),
+              ),
             ),
           ],
         ),
@@ -219,10 +161,123 @@ class _SimulateState extends State<Simulate> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Center(
-        child: DeviceFrame(
-          device: device,
-          orientation: MediaQuery.of(context).orientation,
-          screen: (widget.customView != null) ? widget.customView!.call(context, widget.home, device) : widget.home,
+        child: (isEnable)
+            ? DeviceFrame(
+                device: device,
+                orientation: MediaQuery.of(context).orientation,
+                screen: (widget.customView != null) ? widget.customView!.call(context, widget.home, device) : widget.home,
+              )
+            : widget.home,
+      ),
+    );
+  }
+}
+ 
+
+class StatusBarSimulate extends StatelessWidget {
+  final GlobalKey globalKey;
+  final GlobalKey newGlobalKey;
+  final Widget child;
+  const StatusBarSimulate({
+    super.key,
+    required this.globalKey,
+    required this.newGlobalKey,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.black,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              spreadRadius: 0,
+              blurRadius: 5,
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: MoveWindow(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: child,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  PopupMenuButton(
+                    onSelected: (data) {
+                      if (kDebugMode) {
+                        print(data);
+                      }
+                    },
+                    child: const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Iconsax.camera,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem(
+                          onTap: () async {
+                            String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+                            if (selectedDirectory != null) {
+                              var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                              RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                              ui.Image image = await boundary.toImage();
+                              ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                              Uint8List pngBytes = byteData!.buffer.asUint8List();
+                              var file = File(getPathFile);
+                              await file.writeAsBytes(pngBytes);
+                            }
+                          },
+                          child: const Text("Screenshot"),
+                        ),
+                        PopupMenuItem(
+                          onTap: () async {
+                            String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                            if (selectedDirectory != null) {
+                              var getPathFile = "$selectedDirectory/${DateTime.now()}.png";
+
+                              RenderRepaintBoundary boundary = newGlobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+                              ui.Image image = await boundary.toImage();
+                              ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                              Uint8List pngBytes = byteData!.buffer.asUint8List();
+                              var file = File(getPathFile);
+                              await file.writeAsBytes(pngBytes);
+                            }
+                          },
+                          child: const Text("Screenshot without bar"),
+                        ),
+                      ];
+                    },
+                  ),
+                  MinimizeWindowButton(colors: buttonColors),
+                  MaximizeWindowButton(colors: buttonColors),
+                  CloseWindowButton(colors: closeButtonColors),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
