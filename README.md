@@ -20,9 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:simulate/simulate.dart';
 
 void main() async {
-  await initSimulate(
-    
-  );
+  
+  await Simulate.ensureInitialized();
   runApp(
     const App(),
   );
