@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable, duplicate_ignore
-
 import 'package:flutter/material.dart';
 import 'package:simulate/simulate.dart';
 
@@ -46,7 +44,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const Center(
-        child: TextField(),
+        child: Text("Alow"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

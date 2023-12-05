@@ -1,2 +1,3 @@
-## 0.0.27
-- fix android
+## 0.0.28
+
+- update readme
