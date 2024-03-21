@@ -1,114 +1,59 @@
-# simulate 
+IyBzaW11bGF0ZSAKClNpbXVsYXRlIHlvdXIgcHJvamVjdCBmbHV0dGVyIG9u
+IGNyb3NzIHBsYXRmb3JtIHdpdGggZnJhbWUgZGV2aWNlICggYW5kcm9pZCAs
+IGlvcywgZGVza3RvcCApIG9uIHlvdXIgb3Mgd2l0aG91dCBoZWF2eSB2bQoK
+IyMgRGVtbyAKCiFbU2NyZWVuc2hvdCBmcm9tIDIwMjItMDYtMTMgMDYtMjkt
+MzBdKGh0dHBzOi8vdXNlci1pbWFnZXMuZ2l0aHVidXNlcmNvbnRlbnQuY29t
+LzgyNTEzNTAyLzE3MzI1ODAxMi1jYzg0MjU1ZS00YjA5LTRkYjYtYjk4OC0z
+MGExMGMzYmUxZmQucG5nKQoKCgpodHRwczovL3VzZXItaW1hZ2VzLmdpdGh1
+YnVzZXJjb250ZW50LmNvbS84MjUxMzUwMi8xNzMxNzM1OTAtOWIzYTRkM2Ut
+NDg0Yi00NTA4LWJhZjgtOWJkOGNiNDliMzVmLm1wNAoKYGBgYmFzaApmbHV0
+dGVyIHB1YiBhZGQgc2ltdWxhdGUKYGBgCmBgYGRhcnQKLy8gaWdub3JlX2Zv
+cl9maWxlOiB1bnVzZWRfbG9jYWxfdmFyaWFibGUsIGR1cGxpY2F0ZV9pZ25v
+cmUKCmltcG9ydCAncGFja2FnZTpmbHV0dGVyL21hdGVyaWFsLmRhcnQnOwpp
+bXBvcnQgJ3BhY2thZ2U6c2ltdWxhdGUvc2ltdWxhdGUuZGFydCc7Cgp2b2lk
+IG1haW4oKSBhc3luYyB7CiAgCiAgYXdhaXQgU2ltdWxhdGUuZW5zdXJlSW5p
+dGlhbGl6ZWQoKTsKICBydW5BcHAoCiAgICBjb25zdCBBcHAoKSwKICApOwp9
+CgpjbGFzcyBBcHAgZXh0ZW5kcyBTdGF0ZWxlc3NXaWRnZXQgewogIGNvbnN0
+IEFwcCh7CiAgICBzdXBlci5rZXksCiAgfSk7CiAgQG92ZXJyaWRlCiAgV2lk
+Z2V0IGJ1aWxkKEJ1aWxkQ29udGV4dCBjb250ZXh0KSB7CiAgICByZXR1cm4g
+Y29uc3QgTWF0ZXJpYWxBcHAoCiAgICAgIGRlYnVnU2hvd0NoZWNrZWRNb2Rl
+QmFubmVyOiBmYWxzZSwKICAgICAgaG9tZTogU2ltdWxhdGUoCiAgICAgICAg
+aXNTaG93RnJhbWU6IHRydWUsIC8vIHNldCBmYWxzZSBmb3IgZGlzYWJsZWQK
+ICAgICAgICBpc1Nob3dUb3BGcmFtZTogdHJ1ZSwKICAgICAgICBob21lOiBN
+YXRlcmlhbEFwcCgKICAgICAgICAgIGRlYnVnU2hvd0NoZWNrZWRNb2RlQmFu
+bmVyOiBmYWxzZSwKICAgICAgICAgIGRlYnVnU2hvd01hdGVyaWFsR3JpZDog
+ZmFsc2UsCiAgICAgICAgICBzaG93UGVyZm9ybWFuY2VPdmVybGF5OiBmYWxz
+ZSwKICAgICAgICAgIGhvbWU6IEhvbWUoKSwKICAgICAgICApLAogICAgICAp
+LAogICAgKTsKICB9Cn0KCmNsYXNzIEhvbWUgZXh0ZW5kcyBTdGF0ZWZ1bFdp
+ZGdldCB7CiAgY29uc3QgSG9tZSh7CiAgICBzdXBlci5rZXksCiAgfSk7Cgog
+IEBvdmVycmlkZQogIFN0YXRlPEhvbWU+IGNyZWF0ZVN0YXRlKCkgPT4gX0hv
+bWVTdGF0ZSgpOwp9CgpjbGFzcyBfSG9tZVN0YXRlIGV4dGVuZHMgU3RhdGU8
+SG9tZT4gewogIEBvdmVycmlkZQogIFdpZGdldCBidWlsZChCdWlsZENvbnRl
+eHQgY29udGV4dCkgewogICAgcmV0dXJuIFNjYWZmb2xkKAogICAgICBib2R5
+OiBjb25zdCBDZW50ZXIoCiAgICAgICAgY2hpbGQ6IFRleHQoIkFsb3ciKSwK
+ICAgICAgKSwKICAgICAgZmxvYXRpbmdBY3Rpb25CdXR0b246IEZsb2F0aW5n
+QWN0aW9uQnV0dG9uKAogICAgICAgIG9uUHJlc3NlZDogKCkgewogICAgICAg
+ICAgTmF2aWdhdG9yLnB1c2goCiAgICAgICAgICAgIGNvbnRleHQsCiAgICAg
+ICAgICAgIE1hdGVyaWFsUGFnZVJvdXRlKGJ1aWxkZXI6IChjb250ZXh0KSB7
+CiAgICAgICAgICAgICAgcmV0dXJuIGNvbnN0IExvZ2luU2NyZWVuKCk7CiAg
+ICAgICAgICAgIH0pLAogICAgICAgICAgKTsKICAgICAgICB9LAogICAgICAg
+IGNoaWxkOiBjb25zdCBJY29uKAogICAgICAgICAgSWNvbnMubG9naW4sCiAg
+ICAgICAgKSwKICAgICAgKSwKICAgICk7CiAgfQp9CgpjbGFzcyBMb2dpblNj
+cmVlbiBleHRlbmRzIFN0YXRlZnVsV2lkZ2V0IHsKICBjb25zdCBMb2dpblNj
+cmVlbih7S2V5PyBrZXl9KSA6IHN1cGVyKGtleToga2V5KTsKCiAgQG92ZXJy
+aWRlCiAgU3RhdGU8TG9naW5TY3JlZW4+IGNyZWF0ZVN0YXRlKCkgPT4gX0xv
+Z2luU2NyZWVuU3RhdGUoKTsKfQoKY2xhc3MgX0xvZ2luU2NyZWVuU3RhdGUg
+ZXh0ZW5kcyBTdGF0ZTxMb2dpblNjcmVlbj4gewogIEBvdmVycmlkZQogIFdp
+ZGdldCBidWlsZChCdWlsZENvbnRleHQgY29udGV4dCkgewogICAgcmV0dXJu
+IFNjYWZmb2xkKAogICAgICBhcHBCYXI6IEFwcEJhcigKICAgICAgICBsZWFk
+aW5nOiBGbG9hdGluZ0FjdGlvbkJ1dHRvbigKICAgICAgICAgIG9uUHJlc3Nl
+ZDogKCkgewogICAgICAgICAgICBOYXZpZ2F0b3IucG9wKGNvbnRleHQpOwog
+ICAgICAgICAgfSwKICAgICAgICAgIGNoaWxkOiBjb25zdCBJY29uKAogICAg
+ICAgICAgICBJY29ucy5hcnJvd19iYWNrLAogICAgICAgICAgKSwKICAgICAg
+ICApLAogICAgICApLAogICAgICBib2R5OiBjb25zdCBDZW50ZXIoCiAgICAg
+ICAgY2hpbGQ6IFRleHQoIkFsb3ciKSwKICAgICAgKSwKICAgICk7CiAgfQp9
+CmBgYAoKIA==
 
-Simulate your project flutter on cross platform with frame device ( android , ios, desktop ) on your os without heavy vm
-
-## Demo 
-
-![Screenshot from 2022-06-13 06-29-30](https://user-images.githubusercontent.com/82513502/173258012-cc84255e-4b09-4db6-b988-30a10c3be1fd.png)
-
-
-
-https://user-images.githubusercontent.com/82513502/173173590-9b3a4d3e-484b-4508-baf8-9bd8cb49b35f.mp4
-
-```bash
-flutter pub add simulate
-```
-```dart
-// ignore_for_file: unused_local_variable, duplicate_ignore
-
-import 'package:flutter/material.dart';
-import 'package:simulate/simulate.dart';
-
-void main() async {
-  
-  await Simulate.ensureInitialized();
-  runApp(
-    const App(),
-  );
-}
-
-class App extends StatelessWidget {
-  const App({
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Simulate(
-        isShowFrame: true, // set false for disabled
-        isShowTopFrame: true,
-        home: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          debugShowMaterialGrid: false,
-          showPerformanceOverlay: false,
-          home: Home(),
-        ),
-      ),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  const Home({
-    super.key,
-  });
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(
-        child: Text("Alow"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return const LoginScreen();
-            }),
-          );
-        },
-        child: const Icon(
-          Icons.login,
-        ),
-      ),
-    );
-  }
-}
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: FloatingActionButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back,
-          ),
-        ),
-      ),
-      body: const Center(
-        child: Text("Alow"),
-      ),
-    );
-  }
-}
-```
-
- 
+<!-- START GLOBAL CORPORATION -->
+404: Not Found
+<!-- END GLOBAL CORPORATION -->
