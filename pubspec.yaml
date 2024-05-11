@@ -1,6 +1,6 @@
 name: simulate
 description: Simulate application or add device mock on your app or your flutter project suppoer cross platform android ios , linux , macos, windows.
-version: 0.0.33
+version: 0.0.35
 homepage: https://github.com/azkadev/simulate
 repository: https://github.com/azkadev/simulate
 issue_tracker: https://github.com/azkadev/simulate/issues
@@ -26,7 +26,7 @@ dependencies:
   window_manager: ^0.3.8
   flutter_hicons: ^0.1.0
   universal_io: ^2.2.2
-  system_info_fetch: ^0.0.15
+  system_info_fetch: ^0.0.18
   general_lib_flutter: ^0.0.20
   
 

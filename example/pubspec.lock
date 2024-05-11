@@ -188,10 +188,10 @@ packages:
     dependency: transitive
     description:
       name: general_lib
-      sha256: "0a7f8153446681257ba5cd4b03fbe8eb3495270f70ec04f00bc600f0eacdef4c"
+      sha256: "83447aa339791aad37f85f65ac7808b9f8f5c3b8dc9aaf27ff25079c139d7519"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.38"
+    version: "0.0.40"
   general_lib_flutter:
     dependency: "direct main"
     description:
@@ -406,7 +406,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.33"
+    version: "0.0.34"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -448,10 +448,10 @@ packages:
     dependency: transitive
     description:
       name: system_info_fetch
-      sha256: "20b634d566d3c97399b85a4e8df3043cea895ec392aeeaf22c333f62869cabe1"
+      sha256: ab063d3e02d4f016d3388e19861dbe4e31e3747f3fb6505d4da563723fe4a26f
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.15"
+    version: "0.0.18"
   term_glyph:
     dependency: transitive
     description:
