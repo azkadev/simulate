@@ -406,7 +406,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.34"
+    version: "0.0.35"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -448,10 +448,10 @@ packages:
     dependency: transitive
     description:
       name: system_info_fetch
-      sha256: ab063d3e02d4f016d3388e19861dbe4e31e3747f3fb6505d4da563723fe4a26f
+      sha256: "290159bd394d339fda2263a5225772316130fcf2557e06f2ea74327342c36ce9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.18"
+    version: "0.0.19"
   term_glyph:
     dependency: transitive
     description:
