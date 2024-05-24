@@ -26,8 +26,8 @@ dependencies:
   window_manager: ^0.3.8
   flutter_hicons: ^0.1.0
   universal_io: ^2.2.2
-  system_info_fetch: ^0.0.19
-  general_lib_flutter: ^0.0.20
+  system_info_fetch: ^0.0.20
+  general_lib_flutter: ^0.0.21
   
 
 dev_dependencies:
