@@ -23,7 +23,7 @@ dependencies:
   cupertino_icons: ^1.0.6 
   device_frame: ^1.1.0
   file_picker: ^8.0.0+1
-  window_manager: ^0.3.8
+  window_manager: ^0.3.9
   flutter_hicons: ^0.1.0
   universal_io: ^2.2.2
   system_info_fetch: ^0.0.20
