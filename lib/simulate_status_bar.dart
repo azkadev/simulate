@@ -40,6 +40,7 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 // import 'dart:js';
 
 import 'package:general_lib_flutter/general_lib_flutter.dart';
+import 'package:icons_plus/icons_plus.dart';
 import "package:universal_io/io.dart";
 
 import 'package:flutter/material.dart';
@@ -50,7 +51,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:window_manager/window_manager.dart';
 export 'package:device_frame/device_frame.dart';
 export 'package:file_picker/file_picker.dart';
-import 'package:flutter_hicons/flutter_hicons.dart';
 
 class StatusBarSimulate extends StatelessWidget {
   final GlobalKey globalKey;
@@ -107,8 +107,8 @@ class StatusBarSimulate extends StatelessWidget {
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Hicons.camera_1_light_outline,
+                        child: Icon( 
+                          Bootstrap.camera,
                           color: context.theme.indicatorColor,
                         ),
                       ),

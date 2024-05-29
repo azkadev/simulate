@@ -37,8 +37,8 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 // ignore_for_file: use_build_context_synchronously, empty_catches, non_constant_identifier_names
 
 import 'dart:async';
-import 'package:flutter_hicons/flutter_hicons.dart';
 import 'package:general_lib_flutter/general_lib_flutter.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:simulate/simulate_status_bar.dart';
 import "package:universal_io/io.dart";
 
@@ -75,8 +75,7 @@ class Simulate extends StatefulWidget {
   final bool isShowExperimental;
   final bool isShowFrame;
   final bool isShowTopFrame;
-  final Widget Function(
-      BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
+  final Widget Function(BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
 
   final GlobalKey? allBodyKey;
   final GlobalKey? frameBodyKey;
@@ -222,9 +221,7 @@ class _SimulateState extends State<Simulate> {
                       return false;
                     }
 
-                    if (Platform.isLinux ||
-                        Platform.isWindows ||
-                        Platform.isMacOS) {
+                    if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
                       return true;
                     }
 
@@ -245,8 +242,7 @@ class _SimulateState extends State<Simulate> {
                                   if (Simulate.simulate_data.is_simulate) {
                                     return "${device.name} ${device.identifier.platform.name}";
                                   }
-                                  return "${SystemInfoFetch.get_model ?? "Unknown Device"}"
-                                      .trim();
+                                  return "${SystemInfoFetch.get_model ?? "Unknown Device"}".trim();
                                 }(),
                                 style: TextStyle(
                                   color: context.theme.indicatorColor,
@@ -261,8 +257,7 @@ class _SimulateState extends State<Simulate> {
                                 return PopupMenuItem(
                                   child: Text(
                                     "${deviceInfo.name} ${deviceInfo.identifier.platform.name.replaceFirstMapped(RegExp("^(.)"), (match) {
-                                      return (match.group(1) ?? "")
-                                          .toUpperCase();
+                                      return (match.group(1) ?? "").toUpperCase();
                                     })}",
                                   ),
                                   onTap: () {
@@ -282,12 +277,8 @@ class _SimulateState extends State<Simulate> {
                             Simulate.simulate_data.isSimulateUpdate();
                           },
                           child: Icon(
-                            (Simulate.simulate_data.is_simulate)
-                                ? Icons.toggle_on
-                                : Icons.toggle_off,
-                            color: (Simulate.simulate_data.is_simulate)
-                                ? Colors.blue
-                                : context.theme.indicatorColor,
+                            (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
+                            color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
                           ),
                         ),
                         Builder(
@@ -296,22 +287,21 @@ class _SimulateState extends State<Simulate> {
                               onPressed: () {
                                 widget.generalLibFlutterApp.autoChangeTheme(
                                   onChangeBrightness: () {
-                                    return context
-                                        .mediaQueryData.platformBrightness;
+                                    return context.mediaQueryData.platformBrightness;
                                   },
                                 );
                                 setState(() {});
                               },
                               icon: Icon(
                                 () {
-                                  if (widget.generalLibFlutterApp.themeMode ==
-                                      ThemeMode.dark) {
+                                  if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
                                     return Icons.dark_mode;
                                   }
-                                  if (widget.generalLibFlutterApp.themeMode ==
-                                      ThemeMode.light) {
+                                  if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
                                     return Icons.light_mode;
                                   }
+                                  // return AntDesign.dark;
+                                  // return Clarity.dark;
                                   return Icons.auto_mode;
                                 }(),
                               ),
@@ -325,7 +315,8 @@ class _SimulateState extends State<Simulate> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
-                                Hicons.setting_light_outline,
+                                // Hicons.setting_light_outline,
+                                Clarity.settings_line,
                                 color: context.theme.indicatorColor,
                               ),
                             ),
@@ -386,11 +377,7 @@ class _SimulateState extends State<Simulate> {
                 ].contains(device.identifier.platform)) {
                   return widget.home;
                 }
-                double pding = ((Simulate.simulate_data.global_home_widget
-                            .sizeRenderBox()
-                            .width /
-                        2) /
-                    2);
+                double pding = ((Simulate.simulate_data.global_home_widget.sizeRenderBox().width / 2) / 2);
                 if (pding <= 0) {
                   pding = ((context.width / 2.5) / 2);
                 }
@@ -401,14 +388,8 @@ class _SimulateState extends State<Simulate> {
                       child: MediaQuery(
                         data: context.mediaQueryData.copyWith(
                           padding: context.mediaQueryData.padding.copyWith(
-                            top: Simulate.simulate_data.global_status_bar
-                                    .sizeRenderBox()
-                                    .height +
-                                context.mediaQueryData.padding.top,
-                            bottom: Simulate.simulate_data.global_status_bar
-                                    .sizeRenderBox()
-                                    .height +
-                                context.mediaQueryData.padding.top,
+                            top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
+                            bottom: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
                           ),
                         ),
                         child: widget.home,
@@ -440,37 +421,33 @@ class _SimulateState extends State<Simulate> {
                                   child: Row(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
+                                        padding: const EdgeInsets.symmetric(horizontal: 1),
                                         child: Icon(
-                                          Icons.telegram,
+                                          BoxIcons.bxl_telegram,
                                           color: context.theme.indicatorColor,
                                           size: 15,
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
+                                        padding: const EdgeInsets.symmetric(horizontal: 1),
                                         child: Icon(
-                                          Icons.wechat,
+                                          BoxIcons.bxl_whatsapp,
                                           color: context.theme.indicatorColor,
                                           size: 15,
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
+                                        padding: const EdgeInsets.symmetric(horizontal: 1),
                                         child: Icon(
-                                          Icons.snapchat,
+                                          BoxIcons.bxl_snapchat,
                                           color: context.theme.indicatorColor,
                                           size: 15,
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
+                                        padding: const EdgeInsets.symmetric(horizontal: 1),
                                         child: Icon(
-                                          Icons.tiktok,
+                                          BoxIcons.bxl_tiktok,
                                           color: context.theme.indicatorColor,
                                           size: 15,
                                         ),
@@ -485,15 +462,16 @@ class _SimulateState extends State<Simulate> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.wifi_rounded,
+                                  Bootstrap.wifi,
                                   color: context.theme.indicatorColor,
                                 ),
                                 Icon(
+
                                   Icons.signal_cellular_4_bar_rounded,
                                   color: context.theme.indicatorColor,
                                 ),
                                 Icon(
-                                  Icons.battery_full_rounded,
+                                  Bootstrap.battery_half, 
                                   color: context.theme.indicatorColor,
                                 ),
                               ],
