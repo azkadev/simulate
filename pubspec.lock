@@ -185,7 +185,7 @@ packages:
     source: hosted
     version: "2.4.1"
   general_lib:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: general_lib
       sha256: "1dd01fdeeb8f1dfd04bfe9aa28dbcd56f563fb42b124dc7ecade4c7ab8c56a6b"
