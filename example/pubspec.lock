@@ -196,18 +196,18 @@ packages:
     dependency: transitive
     description:
       name: general_lib
-      sha256: "1dd01fdeeb8f1dfd04bfe9aa28dbcd56f563fb42b124dc7ecade4c7ab8c56a6b"
+      sha256: "31a7b5d3ddecf4f2cbec40f63343dac1394a6d66354ec95f82c6e2aa70a4237d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.41"
+    version: "0.0.42"
   general_lib_flutter:
     dependency: "direct main"
     description:
       name: general_lib_flutter
-      sha256: e991a2eef25bc49e923e1dcdacda1c7e9dea5e0cdf143a01198cbe1779106b4d
+      sha256: "77db2260e6e7c6336442ce040e7f87b6175c945904b459dc864f63f5229bf791"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.21"
+    version: "0.0.22"
   http:
     dependency: "direct main"
     description:

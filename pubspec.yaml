@@ -27,8 +27,8 @@ dependencies:
   flutter_hicons: ^0.1.0
   universal_io: ^2.2.2
   system_info_fetch: ^0.0.20
-  general_lib_flutter: ^0.0.21
-  general_lib: ^0.0.41
+  general_lib_flutter: ^0.0.22
+  general_lib: ^0.0.42
   icons_plus: ^5.0.0
   
 
