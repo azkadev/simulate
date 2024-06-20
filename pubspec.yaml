@@ -1,41 +1,37 @@
-name: simulate
-description: Simulate application or add device mock on your app or your flutter project suppoer cross platform android ios , linux , macos, windows.
-version: 0.0.37
-homepage: https://github.com/azkadev/simulate
-repository: https://github.com/azkadev/simulate
-issue_tracker: https://github.com/azkadev/simulate/issues
-# publish_to: none
-platforms:
-  android:
-  ios:
-  linux:
-  macos:
-  windows:
-  web:
-
-environment:
-  sdk: ">=3.0.0 <4.0.0"
- 
-dependencies:
-  flutter:
-    sdk: flutter
- 
-  cupertino_icons: ^1.0.6 
-  device_frame: ^1.1.0
-  file_picker: ^8.0.0+1
-  window_manager: ^0.3.9
-  flutter_hicons: ^0.1.0
-  universal_io: ^2.2.2
-  system_info_fetch: ^0.0.21
-  general_lib_flutter: ^0.0.22
-  general_lib: ^0.0.42
-  icons_plus: ^5.0.0
-  
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter 
-  flutter_lints: ^2.0.1
-
+name: 'simulate'
+description: 'Simulate application or add device mock on your app or your flutter project suppoer cross platform android ios , linux , macos, windows.'
+version: '0.0.0'
+homepage: 'https://github.com/azkadev/simulate'
+repository: 'https://github.com/azkadev/simulate'
+issue_tracker: 'https://github.com/azkadev/simulate/issues'
+platforms: 
+  android: null
+  ios: null
+  linux: null
+  macos: null
+  windows: null
+  web: null
+environment: 
+  sdk: '>=3.3.3 <4.0.0'
+dependencies: 
+  flutter: 
+    sdk: 'flutter'
+  cupertino_icons: '^1.0.6'
+  device_frame: '^1.1.0'
+  file_picker: '^8.0.0+1'
+  window_manager: '^0.3.9'
+  flutter_hicons: '^0.1.0'
+  universal_io: '^2.2.2'
+  system_info_fetch: '^0.0.21'
+  general_lib_flutter: '^0.0.22'
+  general_lib: '^0.0.42'
+  icons_plus: '^5.0.0'
+dev_dependencies: 
+  flutter_test: 
+    sdk: 'flutter'
+  flutter_lints: '^2.0.1'
 flutter: 
-  uses-material-design: true 
+  uses-material-design: true
+publish_to: 'none'
+dependency_overrides: 
+  pointycastle: '3.8.0'
