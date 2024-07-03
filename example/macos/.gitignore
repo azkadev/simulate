@@ -5,3 +5,11 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+*.exe
+*.deb
+*.sqlite-*
+*.sqlite
+docs/canvaskit
+*/canvaskit
+.dart_tool/
+/build/

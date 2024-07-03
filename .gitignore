@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/release
 
 *.png
+*.exe
+*.deb
+*.sqlite-*
+*.sqlite
+docs/canvaskit
+*/canvaskit
