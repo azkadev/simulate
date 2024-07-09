@@ -22,7 +22,7 @@ dependencies:
   window_manager: '^0.3.9'
   flutter_hicons: '^0.1.0'
   universal_io: '^2.2.2'
-  system_info_fetch: '^0.0.22'
+  system_info_fetch: '^0.0.21'
   general_lib_flutter: '^0.0.23'
   general_lib: '^0.0.43'
   icons_plus: '^5.0.0'
@@ -32,7 +32,6 @@ dev_dependencies:
   flutter_lints: '^2.0.1'
 flutter: 
   uses-material-design: true
-# publish_to: 'none'
 dependency_overrides: 
   pointycastle: '3.8.0'
 funding: 
