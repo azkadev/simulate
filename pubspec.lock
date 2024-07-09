@@ -188,18 +188,18 @@ packages:
     dependency: "direct main"
     description:
       name: general_lib
-      sha256: "31a7b5d3ddecf4f2cbec40f63343dac1394a6d66354ec95f82c6e2aa70a4237d"
+      sha256: f968f3bee797cbdd3b3282b1842e3674f7a0e07cad6326996982d1b1bd56f5ac
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.42"
+    version: "0.0.43"
   general_lib_flutter:
     dependency: "direct main"
     description:
       name: general_lib_flutter
-      sha256: "77db2260e6e7c6336442ce040e7f87b6175c945904b459dc864f63f5229bf791"
+      sha256: "5acc868b6edab12f847051f83a3350930bbcd4803adc700e7ef1c48b736db450"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.22"
+    version: "0.0.23"
   http:
     dependency: transitive
     description:
@@ -345,13 +345,13 @@ packages:
     source: hosted
     version: "2.1.8"
   pointycastle:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: pointycastle
-      sha256: "43ac87de6e10afabc85c445745a7b799e04de84cebaa4fd7bf55a5e1e9604d29"
+      sha256: "70fe966348fe08c34bf929582f1d8247d9d9408130723206472b4687227e4333"
       url: "https://pub.dev"
     source: hosted
-    version: "3.7.4"
+    version: "3.8.0"
   screen_retriever:
     dependency: transitive
     description:
@@ -401,10 +401,10 @@ packages:
     dependency: "direct main"
     description:
       name: system_info_fetch
-      sha256: c3189eec33c5666cf6ef232de838c07b0cd973363338f6d550aecf26bdd19462
+      sha256: "7746a9e89708d42696af38fbddb06f07919217591069e3949c5eefc664d6dd95"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.21"
+    version: "0.0.22"
   term_glyph:
     dependency: transitive
     description:
