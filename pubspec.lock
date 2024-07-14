@@ -196,10 +196,10 @@ packages:
     dependency: "direct main"
     description:
       name: general_lib_flutter
-      sha256: "5acc868b6edab12f847051f83a3350930bbcd4803adc700e7ef1c48b736db450"
+      sha256: "4d7c0eb58c127256f9a56fa42db9e949212d804bf7dbc88ddb6c8b98a7a47863"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.23"
+    version: "0.0.24"
   http:
     dependency: transitive
     description:
