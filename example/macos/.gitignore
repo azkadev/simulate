@@ -13,3 +13,4 @@ docs/canvaskit
 */canvaskit
 .dart_tool/
 /build/
+generate_glx_*

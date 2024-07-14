@@ -49,3 +49,4 @@ app.*.map.json
 *.sqlite
 docs/canvaskit
 */canvaskit
+generate_glx_*
