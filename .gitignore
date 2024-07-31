@@ -50,3 +50,4 @@ app.*.map.json
 docs/canvaskit
 */canvaskit
 generate_glx_*
+node_modules/

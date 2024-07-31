@@ -77,15 +77,10 @@ class StatusBarSimulate extends StatelessWidget {
           color: context.theme.scaffoldBackgroundColor,
           boxShadow: [
             BoxShadow(
-              color: context.theme.shadowColor,
+              color: context.theme.shadowColor.withAlpha(110),
               spreadRadius: 2,
               blurRadius: 5,
-            ),
-            BoxShadow(
-              color: context.theme.shadowColor,
-              spreadRadius: 2,
-              blurRadius: 5,
-            ),
+            ), 
           ],
         ),
         clipBehavior: Clip.antiAlias,
@@ -118,15 +113,12 @@ class StatusBarSimulate extends StatelessWidget {
                         PopupMenuItem(
                           onTap: () async {
                             try {
-                              String? selectedDirectory =
-                                  await FilePicker.platform.getDirectoryPath();
+                              String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
 
                               if (selectedDirectory != null) {
-                                var getPathFile =
-                                    "${selectedDirectory}/${DateTime.now()}.png";
+                                var getPathFile = "${selectedDirectory}/${DateTime.now()}.png";
 
-                                Uint8List? pngBytes =
-                                    await globalKey.toImagePng();
+                                Uint8List? pngBytes = await globalKey.toImagePng();
                                 if (pngBytes != null) {
                                   var file = File(getPathFile);
                                   await file.writeAsBytes(pngBytes);
@@ -139,20 +131,16 @@ class StatusBarSimulate extends StatelessWidget {
                         PopupMenuItem(
                           onTap: () async {
                             try {
-                              String? selectedDirectory =
-                                  await FilePicker.platform.getDirectoryPath();
+                              String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
                               if (selectedDirectory != null) {
-                                var getPathFile =
-                                    "${selectedDirectory}/${DateTime.now()}.png";
-                                Uint8List? pngBytes =
-                                    await newGlobalKey.toImagePng();
+                                var getPathFile = "${selectedDirectory}/${DateTime.now()}.png";
+                                Uint8List? pngBytes = await newGlobalKey.toImagePng();
 
                                 if (pngBytes != null) {
                                   var file = File(getPathFile);
                                   await file.writeAsBytes(pngBytes);
                                 } else {
-                                  context.showSnackBar(
-                                      "Maaf Gagal membuat Image Ke Png");
+                                  context.showSnackBar("Maaf Gagal membuat Image Ke Png");
                                 }
                               }
                             } catch (e) {
@@ -187,8 +175,7 @@ class StatusBarSimulate extends StatelessWidget {
                         return false;
                       }
                     }(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                       if (snapshot.data == true) {
                         return WindowCaptionButton.unmaximize(
                           brightness: platformBrightness(context: context),
