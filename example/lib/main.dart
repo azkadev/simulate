@@ -39,6 +39,7 @@ import 'package:simulate/simulate.dart';
 
 void main() async {
   await Simulate.ensureInitialized();
+  
   runApp(
     const App(),
   );
@@ -95,21 +96,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(512),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [],
-              )
-            ],
-          ),
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: Text("Gello"),
       ),
       body: const Center(
         child: Text("Alow"),

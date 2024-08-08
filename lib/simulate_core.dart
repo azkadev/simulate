@@ -37,6 +37,7 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 // ignore_for_file: use_build_context_synchronously, empty_catches, non_constant_identifier_names
 
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:general_lib/general_lib.dart';
 import 'package:general_lib_flutter/general_lib_flutter.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -58,8 +59,9 @@ class SimulateData extends ChangeNotifier {
   bool is_show_navigation_bar = true;
   bool is_show_full_operating_system = false;
 
-  GlobalKey global_status_bar = GlobalKey();
-  GlobalKey global_home_widget = GlobalKey();
+  final GlobalKey global_status_bar = GlobalKey();
+  final GlobalKey global_bottom_bar = GlobalKey();
+  final GlobalKey global_home_widget = GlobalKey();
 
   void Function() onUpdate = () {};
 
@@ -79,8 +81,7 @@ class Simulate extends StatefulWidget {
   final bool isShowExperimental;
   final bool isShowFrame;
   final bool isShowTopFrame;
-  final Widget Function(
-      BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
+  final Widget Function(BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
 
   final GlobalKey? allBodyKey;
   final GlobalKey? frameBodyKey;
@@ -190,23 +191,18 @@ class Simulate extends StatefulWidget {
       return;
     }
 
-    await windowManager.setTitleBarStyle(
-        visibility ? TitleBarStyle.normal : TitleBarStyle.hidden,
-        windowButtonVisibility: windowButtonVisibility);
+    await windowManager.setTitleBarStyle(visibility ? TitleBarStyle.normal : TitleBarStyle.hidden, windowButtonVisibility: windowButtonVisibility);
   }
 }
 
 class _SimulateState extends State<Simulate> {
-  DeviceInfo device = Devices.ios.iPhone13ProMax;
+  DeviceInfo device = Devices.android.samsungGalaxyNote20Ultra;
   bool is_loading_complete = false;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        device = widget.deviceDefault ?? Devices.ios.iPhone13ProMax;
-        is_loading_complete = true;
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      task();
     });
   }
 
@@ -215,8 +211,20 @@ class _SimulateState extends State<Simulate> {
     super.dispose();
   }
 
-  GlobalKey allBodyKey = GlobalKey(debugLabel: "all_body_a");
-  GlobalKey frameBodyKey = GlobalKey(debugLabel: "frame_body_a");
+  void task() {
+    setState(() {});
+    Future(() async {
+      setState(() {
+        device = widget.deviceDefault ?? Devices.android.samsungGalaxyNote20Ultra;
+        is_loading_complete = true;
+      });
+      await Future.delayed(Durations.short1);
+      setState(() {});
+    });
+  }
+
+  final GlobalKey allBodyKey = GlobalKey(debugLabel: "all_body_a");
+  final GlobalKey frameBodyKey = GlobalKey(debugLabel: "frame_body_a");
 
   @override
   Widget build(BuildContext context) {
@@ -242,9 +250,7 @@ class _SimulateState extends State<Simulate> {
                       return false;
                     }
 
-                    if (Platform.isLinux ||
-                        Platform.isWindows ||
-                        Platform.isMacOS) {
+                    if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
                       return true;
                     }
 
@@ -265,8 +271,7 @@ class _SimulateState extends State<Simulate> {
                                   if (Simulate.simulate_data.is_simulate) {
                                     return "${device.name} ${device.identifier.platform.name}";
                                   }
-                                  return "${SystemInfoFetch.get_model ?? "Unknown Device"}"
-                                      .trim();
+                                  return "${SystemInfoFetch.get_model ?? "Unknown Device"}".trim();
                                 }(),
                                 style: TextStyle(
                                   color: context.theme.indicatorColor,
@@ -281,8 +286,7 @@ class _SimulateState extends State<Simulate> {
                                 return PopupMenuItem(
                                   child: Text(
                                     "${deviceInfo.name} ${deviceInfo.identifier.platform.name.replaceFirstMapped(RegExp("^(.)"), (match) {
-                                      return (match.group(1) ?? "")
-                                          .toUpperCase();
+                                      return (match.group(1) ?? "").toUpperCase();
                                     })}",
                                   ),
                                   onTap: () {
@@ -302,12 +306,8 @@ class _SimulateState extends State<Simulate> {
                             Simulate.simulate_data.isSimulateUpdate();
                           },
                           child: Icon(
-                            (Simulate.simulate_data.is_simulate)
-                                ? Icons.toggle_on
-                                : Icons.toggle_off,
-                            color: (Simulate.simulate_data.is_simulate)
-                                ? Colors.blue
-                                : context.theme.indicatorColor,
+                            (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
+                            color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
                           ),
                         ),
                         Builder(
@@ -316,20 +316,17 @@ class _SimulateState extends State<Simulate> {
                               onPressed: () {
                                 widget.generalLibFlutterApp.autoChangeTheme(
                                   onChangeBrightness: () {
-                                    return context
-                                        .mediaQueryData.platformBrightness;
+                                    return context.mediaQueryData.platformBrightness;
                                   },
                                 );
                                 setState(() {});
                               },
                               icon: Icon(
                                 () {
-                                  if (widget.generalLibFlutterApp.themeMode ==
-                                      ThemeMode.dark) {
+                                  if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
                                     return Icons.dark_mode;
                                   }
-                                  if (widget.generalLibFlutterApp.themeMode ==
-                                      ThemeMode.light) {
+                                  if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
                                     return Icons.light_mode;
                                   }
                                   // return AntDesign.dark;
@@ -391,159 +388,199 @@ class _SimulateState extends State<Simulate> {
                 child: CircularProgressIndicator(),
               );
             }
+
             return DeviceFrame(
-              device: device,
-              orientation: MediaQuery.of(context).orientation,
-              screen: () {
-                Function? customView = widget.customView;
-                if (customView != null) {
-                  return customView(context, widget.home, device);
-                }
-                if (widget.isShowExperimental == false) {
-                  return widget.home;
-                }
-                if ([
-                  TargetPlatform.linux,
-                  TargetPlatform.macOS,
-                  TargetPlatform.windows,
-                ].contains(device.identifier.platform)) {
-                  return widget.home;
-                }
-                double pding = ((Simulate.simulate_data.global_home_widget
-                            .sizeRenderBox()
-                            .width /
-                        2) /
-                    2);
-                if (pding <= 0) {
-                  pding = ((context.width / 2.5) / 2);
-                }
-                return Stack(
-                  children: [
-                    Positioned.fill(
-                      key: Simulate.simulate_data.global_home_widget,
-                      child: MediaQuery(
+                device: device,
+                orientation: MediaQuery.of(context).orientation,
+                screen: Builder(
+                  builder: (context) {
+                    final Function? customView = widget.customView;
+                    if (customView != null) {
+                      return MediaQuery(
                         data: context.mediaQueryData.copyWith(
-                          padding: context.mediaQueryData.padding.copyWith(
-                            top: Simulate.simulate_data.global_status_bar
-                                    .sizeRenderBox()
-                                    .height +
-                                context.mediaQueryData.padding.top,
-                            bottom: Simulate.simulate_data.global_status_bar
-                                    .sizeRenderBox()
-                                    .height +
-                                context.mediaQueryData.padding.top,
-                          ),
+                          size: Size(context.width, context.height),
+                        ),
+                        child: customView(context, widget.home, device),
+                      );
+                    }
+                    if (widget.isShowExperimental == false) {
+                      return MediaQuery(
+                        data: context.mediaQueryData.copyWith(
+                          size: Size(context.width, context.height),
                         ),
                         child: widget.home,
-                      ),
-                    ),
-                    Positioned(
-                      left: 10,
-                      right: 10,
-                      top: 5,
-                      child: Padding(
-                        key: Simulate.simulate_data.global_status_bar,
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${DateTime.now().hour}:${DateTime.now().minute}",
-                                  style: TextStyle(
-                                    color: context.theme.indicatorColor,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(1),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
-                                        child: Icon(
-                                          BoxIcons.bxl_telegram,
-                                          color: context.theme.indicatorColor,
-                                          size: 15,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
-                                        child: Icon(
-                                          BoxIcons.bxl_whatsapp,
-                                          color: context.theme.indicatorColor,
-                                          size: 15,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
-                                        child: Icon(
-                                          BoxIcons.bxl_snapchat,
-                                          color: context.theme.indicatorColor,
-                                          size: 15,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
-                                        child: Icon(
-                                          BoxIcons.bxl_tiktok,
-                                          color: context.theme.indicatorColor,
-                                          size: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox.shrink(),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Bootstrap.wifi,
-                                  color: context.theme.indicatorColor,
-                                ),
-                                Icon(
-                                  Icons.signal_cellular_4_bar_rounded,
-                                  color: context.theme.indicatorColor,
-                                ),
-                                Icon(
-                                  Bootstrap.battery_half,
-                                  color: context.theme.indicatorColor,
-                                ),
-                              ],
-                            ),
-                          ],
+                      );
+                    }
+                    if ([
+                      TargetPlatform.linux,
+                      TargetPlatform.macOS,
+                      TargetPlatform.windows,
+                    ].contains(device.identifier.platform)) {
+                      return MediaQuery(
+                        data: context.mediaQueryData.copyWith(
+                          size: Size(context.width, context.height),
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      right: pding,
-                      left: pding,
-                      bottom: 5,
-                      child: Container(
-                        height: 6,
-                        // width: ,
-                        decoration: BoxDecoration(
-                          // color: Colors.grey,
+                        child: widget.home,
+                      );
+                    }
+                    double pding = ((Simulate.simulate_data.global_home_widget.sizeRenderBox().width / 2) / 2);
+                    if (pding <= 0) {
+                      pding = ((context.width / 2.5) / 2);
+                    }
 
-                          color: context.theme.indicatorColor,
-                          borderRadius: BorderRadius.circular(10),
+                    return Stack(
+                      children: [
+                        Positioned.fill(
+                          key: Simulate.simulate_data.global_home_widget,
+                          child: MediaQuery(
+                            data: context.mediaQueryData.copyWith(
+                              size: Size(context.width, context.height),
+                              // padding: context.mediaQueryData.padding.copyWith(
+                              //   top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
+                              //   bottom: Simulate.simulate_data.global_bottom_bar.sizeRenderBox().height + context.mediaQueryData.padding.bottom,
+                              //   right: context.mediaQueryData.padding.right,
+                              //   left: context.mediaQueryData.padding.left,
+                              // ),
+                              // viewPadding: context.mediaQueryData.padding.copyWith(
+                              //   top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
+                              //   bottom: Simulate.simulate_data.global_bottom_bar.sizeRenderBox().height + context.mediaQueryData.padding.bottom,
+                              //   right: context.mediaQueryData.padding.right,
+                              //   left: context.mediaQueryData.padding.left,
+                              // ),
+                            ),
+                            child: widget.home,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                );
-              }(),
-            );
+                        Positioned(
+                          left: 10,
+                          right: 10,
+                          top: 5,
+                          child: Builder(
+                            key: Simulate.simulate_data.global_status_bar,
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${DateTime.now().hour}.${DateTime.now().minute}",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            color: context.theme.indicatorColor,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(1),
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 1),
+                                                child: Icon(
+                                                  BoxIcons.bxl_telegram,
+                                                  color: context.theme.indicatorColor,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 1),
+                                                child: Icon(
+                                                  BoxIcons.bxl_whatsapp,
+                                                  color: context.theme.indicatorColor,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 1),
+                                                child: Icon(
+                                                  BoxIcons.bxl_snapchat,
+                                                  color: context.theme.indicatorColor,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 1),
+                                                child: Icon(
+                                                  BoxIcons.bxl_tiktok,
+                                                  color: context.theme.indicatorColor,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox.shrink(),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 1,
+                                          ),
+                                          child: Icon(
+                                            CupertinoIcons.wifi,
+                                            color: context.theme.indicatorColor,
+                                            size: 15,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 1,
+                                          ),
+                                          child: Icon(
+                                            Icons.signal_cellular_4_bar_rounded,
+                                            color: context.theme.indicatorColor,
+                                            size: 15,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 1,
+                                          ),
+                                          child: Icon(
+                                            CupertinoIcons.battery_full,
+                                            color: context.theme.indicatorColor,
+                                            size: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Positioned(
+                          right: pding,
+                          left: pding,
+                          bottom: 5,
+                          child: Builder(
+                            key: Simulate.simulate_data.global_bottom_bar,
+                            builder: (context) {
+                              return Container(
+                                height: 6,
+                                // width: ,
+                                decoration: BoxDecoration(
+                                  // color: Colors.grey,
+                                  color: context.theme.indicatorColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ));
           }
 
           return widget.home;
