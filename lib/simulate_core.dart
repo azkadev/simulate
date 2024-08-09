@@ -73,6 +73,213 @@ class SimulateData extends ChangeNotifier {
   }
 }
 
+class SimulateApp extends StatefulWidget {
+  final Widget home;
+  final GeneralLibFlutterApp generalLibFlutterApp;
+  const SimulateApp({
+    super.key,
+    required this.home,
+    required this.generalLibFlutterApp,
+  });
+
+  @override
+  State<SimulateApp> createState() => _SimulateAppState();
+}
+
+class _SimulateAppState extends State<SimulateApp> {
+  DeviceInfo device = Devices.android.samsungGalaxyNote20Ultra;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      task();
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  void task() {
+    setState(() {});
+    Future(() async {
+      setState(() {});
+    });
+  }
+
+  final GlobalKey globalKey = GlobalKey();
+
+  final GlobalKey new_global_key = GlobalKey();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: Colors.transparent,
+      body: RepaintBoundary(
+              key: globalKey,
+              child:  Column(
+        children: [
+          StatusBarSimulate(
+            generalLibFlutterApp: widget.generalLibFlutterApp,
+            globalKey: globalKey,
+            newGlobalKey: new_global_key,
+            child: Row(
+              children: [
+                Expanded(
+                  child: PopupMenuButton(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        () {
+                          if (Simulate.simulate_data.is_simulate) {
+                            return "${device.name} ${device.identifier.platform.name}";
+                          }
+                          return "${SystemInfoFetch.get_model ?? "Unknown Device"}".trim();
+                        }(),
+                        style: TextStyle(
+                          color: context.theme.indicatorColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    // surfaceTintColor: context.theme.indicatorColor,
+                    itemBuilder: (BuildContext context) {
+                      return Devices.all.map((DeviceInfo deviceInfo) {
+                        return PopupMenuItem(
+                          child: Text(
+                            "${deviceInfo.name} ${deviceInfo.identifier.platform.name.replaceFirstMapped(RegExp("^(.)"), (match) {
+                              return (match.group(1) ?? "").toUpperCase();
+                            })}",
+                          ),
+                          onTap: () {
+                            setState(() {
+                              device = deviceInfo.copyWith.call();
+                            });
+                          },
+                        );
+                      }).toList();
+                    },
+                  ),
+                ),
+                // const Spacer(),
+                MaterialButton(
+                  minWidth: 0,
+                  onPressed: () {
+                    Simulate.simulate_data.isSimulateUpdate();
+                  },
+                  child: Icon(
+                    (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
+                    color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
+                  ),
+                ),
+                Builder(
+                  builder: (context) {
+                    return IconButton(
+                      onPressed: () {
+                        widget.generalLibFlutterApp.autoChangeTheme(
+                          onChangeBrightness: () {
+                            return context.mediaQueryData.platformBrightness;
+                          },
+                        );
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        () {
+                          if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
+                            return Icons.dark_mode;
+                          }
+                          if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
+                            return Icons.light_mode;
+                          }
+                          // return AntDesign.dark;
+                          // return Clarity.dark;
+                          return Icons.auto_mode;
+                        }(),
+                      ),
+                    );
+                  },
+                ),
+                PopupMenuButton(
+                  position: PopupMenuPosition.under,
+                  tooltip: "Settings",
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        // Hicons.setting_light_outline,
+                        Clarity.settings_line,
+                        color: context.theme.indicatorColor,
+                      ),
+                    ),
+                  ),
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      const PopupMenuItem(
+                        child: Text("Thme "),
+                      ),
+                    ];
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child:RepaintBoundary(
+              key: new_global_key,
+              child:  Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: context.theme.indicatorColor,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: context.theme.shadowColor.withAlpha(110),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                        return MediaQuery(
+                          data: context.mediaQueryData.copyWith(size: constraints.biggest),
+                          child: widget.home,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Simulate(
+                    paddingFrame: EdgeInsets.all(5),
+                    generalLibFlutterApp: widget.generalLibFlutterApp,
+                    alignment: Alignment.topCenter,
+                    isShowExperimental: true,
+                    orientation: Orientation.portrait,
+                    isShowTopFrame: false,
+                    home: widget.home,
+                  ),
+                ),
+              ],
+            ),
+            ),
+          ),
+        ],
+      ),
+      ),
+    );
+  }
+}
+
 /// simulate part
 class Simulate extends StatefulWidget {
   final Widget home;
@@ -86,9 +293,13 @@ class Simulate extends StatefulWidget {
   final GlobalKey? allBodyKey;
   final GlobalKey? frameBodyKey;
   final EdgeInsets? paddingFrame;
+  final Orientation? orientation;
+  final AlignmentGeometry alignment;
   const Simulate({
     super.key,
     required this.generalLibFlutterApp,
+    this.alignment = Alignment.center,
+    this.orientation,
     this.isShowExperimental = false,
     this.paddingFrame,
     this.allBodyKey,
@@ -380,7 +591,8 @@ class _SimulateState extends State<Simulate> {
   Widget bodyDevice() {
     return Padding(
       padding: widget.paddingFrame ?? const EdgeInsets.all(10),
-      child: Center(
+      child: Align(
+        alignment: widget.alignment,
         child: () {
           if (Simulate.simulate_data.is_simulate) {
             if (is_loading_complete == false) {
@@ -391,7 +603,7 @@ class _SimulateState extends State<Simulate> {
 
             return DeviceFrame(
                 device: device,
-                orientation: MediaQuery.of(context).orientation,
+                orientation: widget.orientation ?? MediaQuery.of(context).orientation,
                 screen: Builder(
                   builder: (context) {
                     final Function? customView = widget.customView;

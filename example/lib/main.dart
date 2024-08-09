@@ -39,7 +39,7 @@ import 'package:simulate/simulate.dart';
 
 void main() async {
   await Simulate.ensureInitialized();
-  
+
   runApp(
     const App(),
   );
@@ -62,11 +62,11 @@ class App extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
-          home: Simulate(
+          home: SimulateApp(
             generalLibFlutterApp: generalLibFlutterApp,
-            isShowFrame: true, // set false for disabled
-            isShowTopFrame: true,
-            isShowExperimental: true,
+            // isShowFrame: true, // set false for disabled
+            // isShowTopFrame: true,
+            // isShowExperimental: true,
             home: MaterialApp(
               theme: lightTheme,
               darkTheme: darkTheme,
@@ -95,6 +95,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    // print(context.orientation);
+    if (context.orientation.isLandscape) {
+      print(context.width);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
