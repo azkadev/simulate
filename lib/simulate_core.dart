@@ -55,6 +55,7 @@ import "package:system_info_fetch/system_info_fetch.dart";
 
 class SimulateData extends ChangeNotifier {
   bool is_simulate = (kDebugMode);
+  bool is_use_simulate_app = false;
   bool is_show_status_bar = true;
   bool is_show_navigation_bar = true;
   bool is_show_full_operating_system = false;
@@ -74,12 +75,14 @@ class SimulateData extends ChangeNotifier {
 }
 
 class SimulateApp extends StatefulWidget {
-  final Widget home;
+  final Widget Function(BuildContext context) home;
   final GeneralLibFlutterApp generalLibFlutterApp;
+  final String? title;
   const SimulateApp({
     super.key,
     required this.home,
     required this.generalLibFlutterApp,
+    this.title,
   });
 
   @override
@@ -99,6 +102,7 @@ class _SimulateAppState extends State<SimulateApp> {
 
   @override
   void dispose() {
+    Simulate.simulate_data.is_use_simulate_app = false;
     // TODO: implement dispose
     super.dispose();
   }
@@ -106,6 +110,7 @@ class _SimulateAppState extends State<SimulateApp> {
   void task() {
     setState(() {});
     Future(() async {
+      Simulate.simulate_data.is_use_simulate_app = true;
       setState(() {});
     });
   }
@@ -118,25 +123,21 @@ class _SimulateAppState extends State<SimulateApp> {
     return Scaffold(
       // backgroundColor: Colors.transparent,
       body: RepaintBoundary(
-              key: globalKey,
-              child:  Column(
-        children: [
-          StatusBarSimulate(
-            generalLibFlutterApp: widget.generalLibFlutterApp,
-            globalKey: globalKey,
-            newGlobalKey: new_global_key,
-            child: Row(
-              children: [
-                Expanded(
-                  child: PopupMenuButton(
+        key: globalKey,
+        child: Column(
+          children: [
+            StatusBarSimulate(
+              generalLibFlutterApp: widget.generalLibFlutterApp,
+              globalKey: globalKey,
+              newGlobalKey: new_global_key,
+              child: Row(
+                children: [
+                  Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         () {
-                          if (Simulate.simulate_data.is_simulate) {
-                            return "${device.name} ${device.identifier.platform.name}";
-                          }
-                          return "${SystemInfoFetch.get_model ?? "Unknown Device"}".trim();
+                          return "${widget.title ?? ""}".trim();
                         }(),
                         style: TextStyle(
                           color: context.theme.indicatorColor,
@@ -145,136 +146,122 @@ class _SimulateAppState extends State<SimulateApp> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    // surfaceTintColor: context.theme.indicatorColor,
-                    itemBuilder: (BuildContext context) {
-                      return Devices.all.map((DeviceInfo deviceInfo) {
-                        return PopupMenuItem(
-                          child: Text(
-                            "${deviceInfo.name} ${deviceInfo.identifier.platform.name.replaceFirstMapped(RegExp("^(.)"), (match) {
-                              return (match.group(1) ?? "").toUpperCase();
-                            })}",
-                          ),
-                          onTap: () {
-                            setState(() {
-                              device = deviceInfo.copyWith.call();
-                            });
-                          },
-                        );
-                      }).toList();
+                  ),
+                  // const Spacer(),
+                  MaterialButton(
+                    minWidth: 0,
+                    onPressed: () {
+                      Simulate.simulate_data.isSimulateUpdate();
+                    },
+                    child: Icon(
+                      (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
+                      color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
+                    ),
+                  ),
+                  Builder(
+                    builder: (context) {
+                      return IconButton(
+                        onPressed: () {
+                          widget.generalLibFlutterApp.autoChangeTheme(
+                            onChangeBrightness: () {
+                              return context.mediaQueryData.platformBrightness;
+                            },
+                          );
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          () {
+                            if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
+                              return Icons.dark_mode;
+                            }
+                            if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
+                              return Icons.light_mode;
+                            }
+                            // return AntDesign.dark;
+                            // return Clarity.dark;
+                            return Icons.auto_mode;
+                          }(),
+                        ),
+                      );
                     },
                   ),
-                ),
-                // const Spacer(),
-                MaterialButton(
-                  minWidth: 0,
-                  onPressed: () {
-                    Simulate.simulate_data.isSimulateUpdate();
-                  },
-                  child: Icon(
-                    (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
-                    color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
-                  ),
-                ),
-                Builder(
-                  builder: (context) {
-                    return IconButton(
-                      onPressed: () {
-                        widget.generalLibFlutterApp.autoChangeTheme(
-                          onChangeBrightness: () {
-                            return context.mediaQueryData.platformBrightness;
-                          },
-                        );
-                        setState(() {});
-                      },
-                      icon: Icon(
-                        () {
-                          if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
-                            return Icons.dark_mode;
-                          }
-                          if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
-                            return Icons.light_mode;
-                          }
-                          // return AntDesign.dark;
-                          // return Clarity.dark;
-                          return Icons.auto_mode;
-                        }(),
-                      ),
-                    );
-                  },
-                ),
-                PopupMenuButton(
-                  position: PopupMenuPosition.under,
-                  tooltip: "Settings",
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        // Hicons.setting_light_outline,
-                        Clarity.settings_line,
-                        color: context.theme.indicatorColor,
-                      ),
-                    ),
-                  ),
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        child: Text("Thme "),
-                      ),
-                    ];
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child:RepaintBoundary(
-              key: new_global_key,
-              child:  Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    margin: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: context.theme.indicatorColor,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: context.theme.shadowColor.withAlpha(110),
-                          spreadRadius: 2,
-                          blurRadius: 5,
+                  PopupMenuButton(
+                    position: PopupMenuPosition.under,
+                    tooltip: "Settings",
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          // Hicons.setting_light_outline,
+                          Clarity.settings_line,
+                          color: context.theme.indicatorColor,
                         ),
-                      ],
+                      ),
                     ),
-                    child: LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
-                        return MediaQuery(
-                          data: context.mediaQueryData.copyWith(size: constraints.biggest),
-                          child: widget.home,
-                        );
-                      },
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        const PopupMenuItem(
+                          child: Text("Thme "),
+                        ),
+                      ];
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: RepaintBoundary(
+                key: new_global_key,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: context.theme.indicatorColor,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.theme.shadowColor.withAlpha(110),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: LayoutBuilder(
+                          builder: (BuildContext context, BoxConstraints constraints) {
+                            return MediaQuery(
+                              data: context.mediaQueryData.copyWith(size: constraints.biggest),
+                              child: widget.home(context),
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: Simulate(
+                        paddingFrame: const EdgeInsets.all(5),
+                        generalLibFlutterApp: widget.generalLibFlutterApp,
+                        alignment: Alignment.topCenter,
+                        isShowExperimental: true,
+                        orientation: Orientation.portrait,
+                        isShowTopFrame: false,
+                        home: Builder(
+                          builder: (context) {
+                            return widget.home(context);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Simulate(
-                    paddingFrame: EdgeInsets.all(5),
-                    generalLibFlutterApp: widget.generalLibFlutterApp,
-                    alignment: Alignment.topCenter,
-                    isShowExperimental: true,
-                    orientation: Orientation.portrait,
-                    isShowTopFrame: false,
-                    home: widget.home,
-                  ),
-                ),
-              ],
+              ),
             ),
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }

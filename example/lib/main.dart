@@ -63,6 +63,7 @@ class App extends StatelessWidget {
           darkTheme: darkTheme,
           themeMode: themeMode,
           home: SimulateApp(
+            
             generalLibFlutterApp: generalLibFlutterApp,
             // isShowFrame: true, // set false for disabled
             // isShowTopFrame: true,
