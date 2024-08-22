@@ -15,3 +15,11 @@ docs/canvaskit
 /build/
 generate_glx_*
 node_modules/
+build/
+ephemeral/
+flutter/ephemeral
+android/.gradle
+android/flutter/ephemeral
+linux/flutter/ephemeral
+macos/Flutter/ephemeral
+windows/ephemeral
