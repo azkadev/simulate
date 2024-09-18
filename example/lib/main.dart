@@ -33,12 +33,16 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 
 <!-- END LICENSE --> */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:general_lib_flutter/general_lib_flutter.dart';
 import 'package:simulate/simulate.dart';
 
 void main() async {
-  await Simulate.ensureInitialized();
+  await Simulate.ensureInitialized(
+    isSimulate: true,
+  );
 
   runApp(
     const App(),
@@ -62,22 +66,60 @@ class App extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
-          home: SimulateApp(
-            
-            generalLibFlutterApp: generalLibFlutterApp,
-            // isShowFrame: true, // set false for disabled
-            // isShowTopFrame: true,
-            // isShowExperimental: true,
-            home: MaterialApp(
-              theme: lightTheme,
-              darkTheme: darkTheme,
-              themeMode: themeMode,
-              debugShowCheckedModeBanner: false,
-              debugShowMaterialGrid: false,
-              showPerformanceOverlay: false,
-              home: const Home(),
-            ),
-          ),
+          home: () {
+            if (Platform.isAndroid || Platform.isIOS ) {
+              return ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: context.height,
+                  minWidth: context.width
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: context.mediaQueryData.padding.top,
+                    ),
+                    Flexible(
+                      child: Simulate(
+                        generalLibFlutterApp: generalLibFlutterApp,
+                        isShowExperimental: true,
+                        isShowFrame: true,
+                        isShowTopFrame: true,
+                        // isShowFrame: true, // set false for disabled
+                        // isShowTopFrame: true,
+                        // isShowExperimental: true,
+                        home: MaterialApp(
+                          theme: lightTheme,
+                          darkTheme: darkTheme,
+                          themeMode: themeMode,
+                          debugShowCheckedModeBanner: false,
+                          debugShowMaterialGrid: false,
+                          showPerformanceOverlay: false,
+                          home: const Home(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return SimulateApp(
+              generalLibFlutterApp: generalLibFlutterApp,
+              // isShowFrame: true, // set false for disabled
+              // isShowTopFrame: true,
+              // isShowExperimental: true,
+              home: (context) {
+                return MaterialApp(
+                  theme: lightTheme,
+                  darkTheme: darkTheme,
+                  themeMode: themeMode,
+                  debugShowCheckedModeBanner: false,
+                  debugShowMaterialGrid: false,
+                  showPerformanceOverlay: false,
+                  home: const Home(),
+                );
+              },
+            );
+          }(),
         );
       },
     );
@@ -96,10 +138,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    // print(context.orientation);
-    if (context.orientation.isLandscape) {
-      print(context.width);
-    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,

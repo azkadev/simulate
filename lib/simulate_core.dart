@@ -38,6 +38,9 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:general_lib/general_lib.dart';
 import 'package:general_lib_flutter/general_lib_flutter.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -393,7 +396,7 @@ class Simulate extends StatefulWidget {
   }
 }
 
-class _SimulateState extends State<Simulate> {
+class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
   DeviceInfo device = Devices.android.samsungGalaxyNote20Ultra;
   bool is_loading_complete = false;
   @override
@@ -402,11 +405,6 @@ class _SimulateState extends State<Simulate> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       task();
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   void task() {
@@ -575,6 +573,8 @@ class _SimulateState extends State<Simulate> {
     // return repaintBoundary;
   }
 
+  late final AnimationController animationController = AnimationController(vsync: this, duration: Durations.short1);
+  // final StatusBarHeightData statusBarHeightData = StatusBarHeightData();
   Widget bodyDevice() {
     return Padding(
       padding: widget.paddingFrame ?? const EdgeInsets.all(10),
@@ -589,197 +589,100 @@ class _SimulateState extends State<Simulate> {
             }
 
             return DeviceFrame(
-                device: device,
-                orientation: widget.orientation ?? MediaQuery.of(context).orientation,
-                screen: Builder(
-                  builder: (context) {
-                    final Function? customView = widget.customView;
-                    if (customView != null) {
-                      return MediaQuery(
-                        data: context.mediaQueryData.copyWith(
-                          size: Size(context.width, context.height),
-                        ),
-                        child: customView(context, widget.home, device),
-                      );
-                    }
-                    if (widget.isShowExperimental == false) {
-                      return MediaQuery(
-                        data: context.mediaQueryData.copyWith(
-                          size: Size(context.width, context.height),
-                        ),
-                        child: widget.home,
-                      );
-                    }
-                    if ([
-                      TargetPlatform.linux,
-                      TargetPlatform.macOS,
-                      TargetPlatform.windows,
-                    ].contains(device.identifier.platform)) {
-                      return MediaQuery(
-                        data: context.mediaQueryData.copyWith(
-                          size: Size(context.width, context.height),
-                        ),
-                        child: widget.home,
-                      );
-                    }
-                    double pding = ((Simulate.simulate_data.global_home_widget.sizeRenderBox().width / 2) / 2);
-                    if (pding <= 0) {
-                      pding = ((context.width / 2.5) / 2);
-                    }
-
-                    return Stack(
-                      children: [
-                        Positioned.fill(
-                          key: Simulate.simulate_data.global_home_widget,
-                          child: MediaQuery(
-                            data: context.mediaQueryData.copyWith(
-                              size: Size(context.width, context.height),
-                              // padding: context.mediaQueryData.padding.copyWith(
-                              //   top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
-                              //   bottom: Simulate.simulate_data.global_bottom_bar.sizeRenderBox().height + context.mediaQueryData.padding.bottom,
-                              //   right: context.mediaQueryData.padding.right,
-                              //   left: context.mediaQueryData.padding.left,
-                              // ),
-                              // viewPadding: context.mediaQueryData.padding.copyWith(
-                              //   top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
-                              //   bottom: Simulate.simulate_data.global_bottom_bar.sizeRenderBox().height + context.mediaQueryData.padding.bottom,
-                              //   right: context.mediaQueryData.padding.right,
-                              //   left: context.mediaQueryData.padding.left,
-                              // ),
-                            ),
-                            child: widget.home,
-                          ),
-                        ),
-                        Positioned(
-                          left: 10,
-                          right: 10,
-                          top: 5,
-                          child: Builder(
-                            key: Simulate.simulate_data.global_status_bar,
-                            builder: (context) {
-                              return Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${DateTime.now().hour}.${DateTime.now().minute}",
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: context.theme.indicatorColor,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(1),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 1),
-                                                child: Icon(
-                                                  BoxIcons.bxl_telegram,
-                                                  color: context.theme.indicatorColor,
-                                                  size: 15,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 1),
-                                                child: Icon(
-                                                  BoxIcons.bxl_whatsapp,
-                                                  color: context.theme.indicatorColor,
-                                                  size: 15,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 1),
-                                                child: Icon(
-                                                  BoxIcons.bxl_snapchat,
-                                                  color: context.theme.indicatorColor,
-                                                  size: 15,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 1),
-                                                child: Icon(
-                                                  BoxIcons.bxl_tiktok,
-                                                  color: context.theme.indicatorColor,
-                                                  size: 15,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox.shrink(),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 1,
-                                          ),
-                                          child: Icon(
-                                            CupertinoIcons.wifi,
-                                            color: context.theme.indicatorColor,
-                                            size: 15,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 1,
-                                          ),
-                                          child: Icon(
-                                            Icons.signal_cellular_4_bar_rounded,
-                                            color: context.theme.indicatorColor,
-                                            size: 15,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 1,
-                                          ),
-                                          child: Icon(
-                                            CupertinoIcons.battery_full,
-                                            color: context.theme.indicatorColor,
-                                            size: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        Positioned(
-                          right: pding,
-                          left: pding,
-                          bottom: 5,
-                          child: Builder(
-                            key: Simulate.simulate_data.global_bottom_bar,
-                            builder: (context) {
-                              return Container(
-                                height: 6,
-                                // width: ,
-                                decoration: BoxDecoration(
-                                  // color: Colors.grey,
-                                  color: context.theme.indicatorColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+              device: device,
+              orientation: widget.orientation ?? MediaQuery.of(context).orientation,
+              screen: Builder(
+                builder: (context) {
+                  final Function? customView = widget.customView;
+                  if (customView != null) {
+                    return MediaQuery(
+                      data: context.mediaQueryData.copyWith(
+                        size: Size(context.width, context.height),
+                      ),
+                      child: customView(context, widget.home, device),
                     );
-                  },
-                ));
+                  }
+                  if (widget.isShowExperimental == false) {
+                    return MediaQuery(
+                      data: context.mediaQueryData.copyWith(
+                        size: Size(context.width, context.height),
+                      ),
+                      child: widget.home,
+                    );
+                  }
+                  if ([
+                    TargetPlatform.linux,
+                    TargetPlatform.macOS,
+                    TargetPlatform.windows,
+                  ].contains(device.identifier.platform)) {
+                    return MediaQuery(
+                      data: context.mediaQueryData.copyWith(
+                        size: Size(context.width, context.height),
+                      ),
+                      child: widget.home,
+                    );
+                  }
+                  double pding = ((Simulate.simulate_data.global_home_widget.sizeRenderBox().width / 2) / 2);
+                  if (pding <= 0) {
+                    pding = ((context.width / 2.5) / 2);
+                  }
+
+                  return Stack(
+                    children: [
+                      Positioned.fill(
+                        key: Simulate.simulate_data.global_home_widget,
+                        child: MediaQuery(
+                          data: context.mediaQueryData.copyWith(
+                            size: Size(context.width, context.height),
+                            // padding: context.mediaQueryData.padding.copyWith(
+                            //   top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
+                            //   bottom: Simulate.simulate_data.global_bottom_bar.sizeRenderBox().height + context.mediaQueryData.padding.bottom,
+                            //   right: context.mediaQueryData.padding.right,
+                            //   left: context.mediaQueryData.padding.left,
+                            // ),
+                            // viewPadding: context.mediaQueryData.padding.copyWith(
+                            //   top: Simulate.simulate_data.global_status_bar.sizeRenderBox().height + context.mediaQueryData.padding.top,
+                            //   bottom: Simulate.simulate_data.global_bottom_bar.sizeRenderBox().height + context.mediaQueryData.padding.bottom,
+                            //   right: context.mediaQueryData.padding.right,
+                            //   left: context.mediaQueryData.padding.left,
+                            // ),
+                          ),
+                          child: widget.home,
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        child: StatusBarSimulateWidget(
+                          animationController: animationController,
+                          // statusBarHeightData: statusBarHeightData,
+                        ),
+                      ),
+                      Positioned(
+                        right: pding,
+                        left: pding,
+                        bottom: 5,
+                        child: Builder(
+                          key: Simulate.simulate_data.global_bottom_bar,
+                          builder: (context) {
+                            return Container(
+                              height: 6,
+                              // width: ,
+                              decoration: BoxDecoration(
+                                // color: Colors.grey,
+                                color: context.theme.indicatorColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
           }
 
           return widget.home;
@@ -788,3 +691,417 @@ class _SimulateState extends State<Simulate> {
     );
   }
 }
+
+// class StatusBarHeightData extends ChangeNotifier {
+//   double height = 0;
+
+//   void decrease({
+//     required double maxHeight,
+//   }) {
+//     if (height == 0) {
+//       return;
+//     }
+//     double result = height - 1.0;
+//     double slebew = maxHeight - (maxHeight / 4);
+//     if (result < 1) {
+//       height = 0;
+//     } else if (result >= slebew) {
+//       height = 0;
+//     } else {
+//       height = result;
+//     }
+//     notifyListeners();
+//   }
+
+//   void increase({
+//     required double maxHeight,
+//   }) {
+//     if (height >= maxHeight) {
+//       return;
+//     }
+//     double result = height + 10.0;
+//     double slebew = maxHeight / 4;
+//     if (result >= slebew) {
+//       height = maxHeight;
+//     } else {
+//       height = result;
+//     }
+//     notifyListeners();
+//   }
+
+//   void update({
+//     required double heightState,
+//   }) {
+//     height = heightState;
+//     notifyListeners();
+//   }
+// }
+
+class StatusBarSimulateWidget extends StatefulWidget {
+  final AnimationController animationController;
+  // final StatusBarHeightData statusBarHeightData;
+  const StatusBarSimulateWidget({
+    super.key,
+    required this.animationController,
+    // required this.statusBarHeightData,
+  });
+
+  @override
+  State<StatusBarSimulateWidget> createState() => _StatusBarSimulateWidgetState();
+}
+
+class _StatusBarSimulateWidgetState extends State<StatusBarSimulateWidget> {
+  // final Curve _modalBottomSheetCurve = const Cubic(0.0, 0.0, 0.2, 1.0);
+  // ParametricCurve<double> animationCurve = const Cubic(0.0, 0.0, 0.2, 1.0);
+  // final double _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
+
+  void handleDragStart(DragStartDetails details) {
+    // Allow the bottom sheet to track the user's finger accurately.
+    // animationCurve = Curves.linear;
+  }
+
+  void handleDragEnd(DragEndDetails details, {bool? isClosing}) {
+    // Allow the bottom sheet to animate smoothly from its current position.
+    // animationCurve = Split(
+    //   widget.animationController.value,
+    //   endCurve: _modalBottomSheetCurve,
+    // );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // RawGestureDetector(
+    //   excludeFromSemantics: true,
+    //   gestures: <Type, GestureRecognizerFactory<GestureRecognizer>>{
+    //     VerticalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<VerticalDragGestureRecognizer>(
+    //       () => VerticalDragGestureRecognizer(debugOwner: this),
+    //       (VerticalDragGestureRecognizer instance) {
+    //         instance.onStart = (rr) {
+    //           print("Rr: ${rr}");
+    //         };
+    //         instance.onEnd = (rr) {
+    //           print("Rr: ${rr}");
+    //         };
+    //         instance.onUpdate = (rr) {
+    //           print("Rr: ${rr}");
+    //         };
+    //         instance.onlyAcceptDragOnThreshold = true;
+    //         //  = (rr) {
+    //           // print("Rr: ${rr}");
+    //         // };
+    //       },
+    //     ),
+    //   },
+    // child:
+    // );
+    return GestureDetector(
+      onVerticalDragEnd: (details) {
+        _handleDragEnd(details);
+      }, 
+      onVerticalDragStart: (details) {
+        handleDragStart(details);
+      },
+      onVerticalDragUpdate: (details) {
+        _handleDragUpdate(details);
+      },
+      // return RawGestureDetector(
+      //   excludeFromSemantics: true,
+      //   gestures: <Type, GestureRecognizerFactory<GestureRecognizer>>{
+      //     VerticalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<VerticalDragGestureRecognizer>(
+      //       () => VerticalDragGestureRecognizer(debugOwner: this),
+      //       (VerticalDragGestureRecognizer instance) {
+      //         instance.onStart = (rr) {
+      //           // print("Rr: ${rr}");
+      //           handleDragStart(rr);
+      //         };
+      //         instance.onEnd = (rr) {
+      //           // print("Rr: ${rr}");
+      //           _handleDragEnd(rr);
+      //         };
+      //         instance.onUpdate = (rr) {
+      //           // print("Rr: ${rr}");
+      //           _handleDragUpdate(rr);
+      //         };
+      //         instance.onlyAcceptDragOnThreshold = true;
+      //         //  = (rr) {
+      //         // print("Rr: ${rr}");
+      //         // };
+      //       },
+      //     ),
+      // },
+      child: SizedBox(
+        width: context.width,
+        child: AnimatedBuilder(
+          animation: widget.animationController,
+          child: Padding(
+            key: Simulate.simulate_data.global_status_bar,
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 15,
+              right: 15,
+              bottom: 15,
+            ),
+            child: statusBar(
+              context: context,
+            ),
+          ),
+          builder: (context, defaultChild) {
+            // print(widget.animationController.value == animationValue);
+            final Widget child = () {
+              if (defaultChild != null) {
+                return defaultChild;
+              }
+              return Padding(
+                // key: Simulate.simulate_data.global_status_bar,
+                padding: const EdgeInsets.all(10),
+                child: statusBar(
+                  context: context,
+                ),
+              );
+            }();
+            return AnimatedCrossFade(
+              firstChild: child,
+              // secondCurve: animationCurve as Curve,
+              // firstCurve: animationCurve as Curve,
+              // sizeCurve: animationCurve as Curve,
+              secondChild: Container(
+                constraints: BoxConstraints(
+                  minHeight: context.height * widget.animationController.value,
+                  maxHeight: context.height,
+                  minWidth: context.width,
+                  maxWidth: context.width,
+                ),
+                decoration: BoxDecoration(
+                  color: context.theme.primaryColor,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      // key: Simulate.simulate_data.global_status_bar,
+                      padding: const EdgeInsets.all(10),
+                      child: statusBar(
+                        context: context,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              crossFadeState: () {
+                if (widget.animationController.value == 0.0) {
+                  return CrossFadeState.showFirst;
+                } else if (widget.animationController.value == 1.0) {
+                  return CrossFadeState.showSecond;
+                } else {
+                  return CrossFadeState.showSecond;
+                }
+              }(),
+              duration: const Duration(milliseconds: 150),
+            );
+            // return
+          },
+        ),
+        // child: ListenableBuilder(
+        //   listenable: widget.statusBarHeightData,
+        //   builder: (context, child) {
+        //     if (widget.statusBarHeightData.height > 0) {
+        //       return AnimatedBuilder(
+        //         animation: widget.animationController,
+        //         builder: (context, child) {
+        //           return Container(
+        //             constraints: BoxConstraints(
+        //               minHeight: widget.statusBarHeightData.height,
+        //               maxHeight: context.height,
+        //               minWidth: context.width,
+        //               maxWidth: context.width,
+        //             ),
+        //             decoration: BoxDecoration(
+        //               color: context.theme.primaryColor,
+        //             ),
+        //             child: Column(
+        //               mainAxisSize: MainAxisSize.min,
+        //               children: [
+        //                 Padding(
+        //                   padding: const EdgeInsets.all(10),
+        //                   child: statusBar(
+        //                     context: context,
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           );
+        //         },
+        //       );
+        //     }
+
+        //     return Padding(
+        //       key: Simulate.simulate_data.global_status_bar,
+        //       padding: const EdgeInsets.all(10),
+        //       child: statusBar(
+        //         context: context,
+        //       ),
+        //     );
+        //   },
+        // ),
+      ),
+    );
+  }
+
+  double get _childHeight {
+    return context.height;
+    // final RenderBox renderBox = _childKey.currentContext!.findRenderObject()! as RenderBox;
+    // return renderBox.size.height;
+  }
+
+  final double _closeProgressThreshold = 0.5;
+
+  final double _minFlingVelocity = 700.0;
+  void _handleDragUpdate(DragUpdateDetails details) {
+    // if (_dismissUnderway) {
+    //   return;
+    // }
+    // print(details.primaryDelta! / _childHeight);
+    if (Dart.isDesktop) {
+      widget.animationController.value -= details.primaryDelta! / _childHeight;
+    } else {
+      widget.animationController.value += details.primaryDelta! / _childHeight;
+    }
+  }
+
+  void _handleDragEnd(DragEndDetails details) {
+    // if (_dismissUnderway) {
+    //   return;
+    // }
+    bool isClosing = false;
+    if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
+      final double flingVelocity = -details.velocity.pixelsPerSecond.dy / _childHeight;
+      if (widget.animationController.value > 0.0) {
+        widget.animationController.fling(velocity: flingVelocity);
+      }
+      if (flingVelocity < 0.0) {
+        isClosing = true;
+      }
+    } else if (widget.animationController.value < _closeProgressThreshold) {
+      if (widget.animationController.value > 0.0) {
+        widget.animationController.fling(velocity: -1.0);
+      }
+      isClosing = true;
+    } else {
+      widget.animationController.forward();
+    }
+    if (isClosing) {
+      // widget.statusBarHeightData.update(heightState: 0);
+      // widget.statusBarHeightData.height = 0;
+    } else {
+      // widget.statusBarHeightData.update(heightState: context.height);
+    }
+    handleDragEnd(details);
+    // widget.statusBarHeightData;
+  }
+
+  Widget statusBar({
+    required BuildContext context,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "${DateTime.now().hour}.${DateTime.now().minute}",
+              style: TextStyle(
+                fontSize: 10,
+                color: context.theme.indicatorColor,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(1),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    child: Icon(
+                      BoxIcons.bxl_telegram,
+                      color: context.theme.indicatorColor,
+                      size: 15,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    child: Icon(
+                      BoxIcons.bxl_whatsapp,
+                      color: context.theme.indicatorColor,
+                      size: 15,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    child: Icon(
+                      BoxIcons.bxl_snapchat,
+                      color: context.theme.indicatorColor,
+                      size: 15,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    child: Icon(
+                      BoxIcons.bxl_tiktok,
+                      color: context.theme.indicatorColor,
+                      size: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox.shrink(),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 1,
+              ),
+              child: Icon(
+                CupertinoIcons.wifi,
+                color: context.theme.indicatorColor,
+                size: 15,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 1,
+              ),
+              child: Icon(
+                Icons.signal_cellular_4_bar_rounded,
+                color: context.theme.indicatorColor,
+                size: 15,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 1,
+              ),
+              child: Icon(
+                CupertinoIcons.battery_full,
+                color: context.theme.indicatorColor,
+                size: 15,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+///
+///
+///
+///
+///
+///
