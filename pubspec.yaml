@@ -22,17 +22,19 @@ dependencies:
   window_manager: '^0.4.0'
   flutter_hicons: '^0.1.0'
   universal_io: '^2.2.2'
-  system_info_fetch: '^0.0.23'
-  general_lib_flutter: '^0.0.25'
-  general_lib: '^0.0.44'
+  system_info_fetch: '^0.0.24'
+  general_lib_flutter: '^0.0.26'
+  general_lib: '^0.0.45'
   icons_plus: '^5.0.0'
 dev_dependencies: 
   flutter_test: 
     sdk: 'flutter'
-  flutter_lints: '^2.0.1'
+  flutter_lints: '^4.0.0'
 flutter: 
   uses-material-design: true
 dependency_overrides: 
   pointycastle: '3.8.0'
 funding: 
   - 'https://github.com/sponsors/azkadev'
+  - 'https://github.com/sponsors/generalfoss'
+documentation: 'https://youtube.com/@azkadev'

@@ -13,11 +13,11 @@ dependencies:
   path_provider: '^2.1.4'
   easy_isolate: '^1.3.0'
   universal_io: '^2.2.2'
-  general_lib_flutter: '^0.0.25'
+  general_lib_flutter: '^0.0.26'
 dev_dependencies: 
   flutter_test: 
     sdk: 'flutter'
-  flutter_lints: '^1.0.0'
+  flutter_lints: '^4.0.0'
   simulate: 
     path: '../'
 flutter: 
@@ -26,3 +26,8 @@ dependency_overrides:
   pointycastle: '3.8.0'
 funding: 
   - 'https://github.com/sponsors/azkadev'
+  - 'https://github.com/sponsors/generalfoss'
+homepage: 'https://youtube.com/@azkadev'
+repository: 'https://github.com/azkadev/general_framework'
+issue_tracker: 'https://t.me/DEVELOPER_GLOBAL_PUBLIC'
+documentation: 'https://youtube.com/@azkadev'
