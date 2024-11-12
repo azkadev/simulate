@@ -38,13 +38,11 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:general_lib/general_lib.dart';
 import 'package:general_lib_flutter/general_lib_flutter.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:simulate/simulate_status_bar.dart';
+import 'package:system_information/system_information.dart';
 import "package:universal_io/io.dart";
 
 import 'package:flutter/material.dart';
@@ -53,8 +51,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
 export 'package:device_frame/device_frame.dart';
-export 'package:file_picker/file_picker.dart';
-import "package:system_info_fetch/system_info_fetch.dart";
+export 'package:file_picker/file_picker.dart'; 
 
 class SimulateData extends ChangeNotifier {
   bool is_simulate = (kDebugMode);
@@ -467,7 +464,7 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                                   if (Simulate.simulate_data.is_simulate) {
                                     return "${device.name} ${device.identifier.platform.name}";
                                   }
-                                  return "${SystemInfoFetch.get_model ?? "Unknown Device"}".trim();
+                                  return "${const SystemInformation().get_model ?? "Unknown Device"}".trim();
                                 }(),
                                 style: TextStyle(
                                   color: context.theme.indicatorColor,

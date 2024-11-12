@@ -4,6 +4,7 @@ version: '0.0.41'
 homepage: 'https://github.com/azkadev/simulate'
 repository: 'https://github.com/azkadev/simulate'
 issue_tracker: 'https://github.com/azkadev/simulate/issues'
+publish_to: 'none'
 platforms: 
   android: null
   ios: null
@@ -18,14 +19,15 @@ dependencies:
     sdk: 'flutter'
   cupertino_icons: '^1.0.8'
   device_frame: '^1.2.0'
-  file_picker: '^8.0.0+1'
+  file_picker: '^8.1.3'
   window_manager: '^0.4.0'
   flutter_hicons: '^0.1.0'
   universal_io: '^2.2.2'
-  system_info_fetch: '^0.0.24'
   general_lib_flutter: '^0.0.27'
   general_lib: '^0.0.46'
   icons_plus: '^5.0.0'
+  system_information: 
+    path: '/home/galaxeus/Documents/galaxeus/app/system_information/library/system_information'
 dev_dependencies: 
   flutter_test: 
     sdk: 'flutter'
