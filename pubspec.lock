@@ -440,17 +440,19 @@ packages:
   system_information:
     dependency: "direct main"
     description:
-      path: "/home/galaxeus/Documents/galaxeus/app/system_information/library/system_information"
-      relative: false
-    source: path
+      name: system_information
+      sha256: da2c490b88f018cefc5499aba1b3f28ca8a1ab8a37abf9a11bb61ba6ad2a02e6
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.0"
   system_information_flutter:
     dependency: transitive
     description:
-      path: "../system_information/library/system_information_flutter"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: system_information_flutter
+      sha256: be96bc4d5da5bdc2b426b555c08039698c1aa44295fbce1077715c5e468c60cd
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.0"
   term_glyph:
     dependency: transitive
     description:

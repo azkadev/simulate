@@ -26,8 +26,8 @@ dependencies:
   general_lib_flutter: '^0.0.27'
   general_lib: '^0.0.46'
   icons_plus: '^5.0.0'
-  system_information: 
-    path: '/home/galaxeus/Documents/galaxeus/app/system_information/library/system_information'
+  system_information: ^0.0.0
+  # system_information_flutter: ^0.0.0
 dev_dependencies: 
   flutter_test: 
     sdk: 'flutter'
