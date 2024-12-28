@@ -51,7 +51,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:window_manager/window_manager.dart';
 export 'package:device_frame/device_frame.dart';
-export 'package:file_picker/file_picker.dart'; 
+export 'package:file_picker/file_picker.dart';
 
 class SimulateData extends ChangeNotifier {
   bool is_simulate = (kDebugMode);
@@ -154,8 +154,12 @@ class _SimulateAppState extends State<SimulateApp> {
                       Simulate.simulate_data.isSimulateUpdate();
                     },
                     child: Icon(
-                      (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
-                      color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
+                      (Simulate.simulate_data.is_simulate)
+                          ? Icons.toggle_on
+                          : Icons.toggle_off,
+                      color: (Simulate.simulate_data.is_simulate)
+                          ? Colors.blue
+                          : context.theme.indicatorColor,
                     ),
                   ),
                   Builder(
@@ -171,10 +175,12 @@ class _SimulateAppState extends State<SimulateApp> {
                         },
                         icon: Icon(
                           () {
-                            if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
+                            if (widget.generalLibFlutterApp.themeMode ==
+                                ThemeMode.dark) {
                               return Icons.dark_mode;
                             }
-                            if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
+                            if (widget.generalLibFlutterApp.themeMode ==
+                                ThemeMode.light) {
                               return Icons.light_mode;
                             }
                             // return AntDesign.dark;
@@ -232,9 +238,11 @@ class _SimulateAppState extends State<SimulateApp> {
                           ],
                         ),
                         child: LayoutBuilder(
-                          builder: (BuildContext context, BoxConstraints constraints) {
+                          builder: (BuildContext context,
+                              BoxConstraints constraints) {
                             return MediaQuery(
-                              data: context.mediaQueryData.copyWith(size: constraints.biggest),
+                              data: context.mediaQueryData
+                                  .copyWith(size: constraints.biggest),
                               child: widget.home(context),
                             );
                           },
@@ -275,7 +283,8 @@ class Simulate extends StatefulWidget {
   final bool isShowExperimental;
   final bool isShowFrame;
   final bool isShowTopFrame;
-  final Widget Function(BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
+  final Widget Function(
+      BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
 
   final GlobalKey? allBodyKey;
   final GlobalKey? frameBodyKey;
@@ -389,7 +398,9 @@ class Simulate extends StatefulWidget {
       return;
     }
 
-    await windowManager.setTitleBarStyle(visibility ? TitleBarStyle.normal : TitleBarStyle.hidden, windowButtonVisibility: windowButtonVisibility);
+    await windowManager.setTitleBarStyle(
+        visibility ? TitleBarStyle.normal : TitleBarStyle.hidden,
+        windowButtonVisibility: windowButtonVisibility);
   }
 }
 
@@ -408,7 +419,8 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
     setState(() {});
     Future(() async {
       setState(() {
-        device = widget.deviceDefault ?? Devices.android.samsungGalaxyNote20Ultra;
+        device =
+            widget.deviceDefault ?? Devices.android.samsungGalaxyNote20Ultra;
         is_loading_complete = true;
       });
       await Future.delayed(Durations.short1);
@@ -443,7 +455,9 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                       return false;
                     }
 
-                    if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+                    if (Platform.isLinux ||
+                        Platform.isWindows ||
+                        Platform.isMacOS) {
                       return true;
                     }
 
@@ -464,7 +478,8 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                                   if (Simulate.simulate_data.is_simulate) {
                                     return "${device.name} ${device.identifier.platform.name}";
                                   }
-                                  return "${const SystemInformation().get_model ?? "Unknown Device"}".trim();
+                                  return "${const SystemInformation().get_model ?? "Unknown Device"}"
+                                      .trim();
                                 }(),
                                 style: TextStyle(
                                   color: context.theme.indicatorColor,
@@ -479,7 +494,8 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                                 return PopupMenuItem(
                                   child: Text(
                                     "${deviceInfo.name} ${deviceInfo.identifier.platform.name.replaceFirstMapped(RegExp("^(.)"), (match) {
-                                      return (match.group(1) ?? "").toUpperCase();
+                                      return (match.group(1) ?? "")
+                                          .toUpperCase();
                                     })}",
                                   ),
                                   onTap: () {
@@ -499,8 +515,12 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                             Simulate.simulate_data.isSimulateUpdate();
                           },
                           child: Icon(
-                            (Simulate.simulate_data.is_simulate) ? Icons.toggle_on : Icons.toggle_off,
-                            color: (Simulate.simulate_data.is_simulate) ? Colors.blue : context.theme.indicatorColor,
+                            (Simulate.simulate_data.is_simulate)
+                                ? Icons.toggle_on
+                                : Icons.toggle_off,
+                            color: (Simulate.simulate_data.is_simulate)
+                                ? Colors.blue
+                                : context.theme.indicatorColor,
                           ),
                         ),
                         Builder(
@@ -509,17 +529,20 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                               onPressed: () {
                                 widget.generalLibFlutterApp.autoChangeTheme(
                                   onChangeBrightness: () {
-                                    return context.mediaQueryData.platformBrightness;
+                                    return context
+                                        .mediaQueryData.platformBrightness;
                                   },
                                 );
                                 setState(() {});
                               },
                               icon: Icon(
                                 () {
-                                  if (widget.generalLibFlutterApp.themeMode == ThemeMode.dark) {
+                                  if (widget.generalLibFlutterApp.themeMode ==
+                                      ThemeMode.dark) {
                                     return Icons.dark_mode;
                                   }
-                                  if (widget.generalLibFlutterApp.themeMode == ThemeMode.light) {
+                                  if (widget.generalLibFlutterApp.themeMode ==
+                                      ThemeMode.light) {
                                     return Icons.light_mode;
                                   }
                                   // return AntDesign.dark;
@@ -570,7 +593,8 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
     // return repaintBoundary;
   }
 
-  late final AnimationController animationController = AnimationController(vsync: this, duration: Durations.short1);
+  late final AnimationController animationController =
+      AnimationController(vsync: this, duration: Durations.short1);
   // final StatusBarHeightData statusBarHeightData = StatusBarHeightData();
   Widget bodyDevice() {
     return Padding(
@@ -587,7 +611,8 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
 
             return DeviceFrame(
               device: device,
-              orientation: widget.orientation ?? MediaQuery.of(context).orientation,
+              orientation:
+                  widget.orientation ?? MediaQuery.of(context).orientation,
               screen: Builder(
                 builder: (context) {
                   final Function? customView = widget.customView;
@@ -619,7 +644,11 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
                       child: widget.home,
                     );
                   }
-                  double pding = ((Simulate.simulate_data.global_home_widget.sizeRenderBox().width / 2) / 2);
+                  double pding = ((Simulate.simulate_data.global_home_widget
+                              .sizeRenderBox()
+                              .width /
+                          2) /
+                      2);
                   if (pding <= 0) {
                     pding = ((context.width / 2.5) / 2);
                   }
@@ -744,7 +773,8 @@ class StatusBarSimulateWidget extends StatefulWidget {
   });
 
   @override
-  State<StatusBarSimulateWidget> createState() => _StatusBarSimulateWidgetState();
+  State<StatusBarSimulateWidget> createState() =>
+      _StatusBarSimulateWidgetState();
 }
 
 class _StatusBarSimulateWidgetState extends State<StatusBarSimulateWidget> {
@@ -794,7 +824,7 @@ class _StatusBarSimulateWidgetState extends State<StatusBarSimulateWidget> {
     return GestureDetector(
       onVerticalDragEnd: (details) {
         _handleDragEnd(details);
-      }, 
+      },
       onVerticalDragStart: (details) {
         handleDragStart(details);
       },
@@ -971,7 +1001,8 @@ class _StatusBarSimulateWidgetState extends State<StatusBarSimulateWidget> {
     // }
     bool isClosing = false;
     if (details.velocity.pixelsPerSecond.dy > _minFlingVelocity) {
-      final double flingVelocity = -details.velocity.pixelsPerSecond.dy / _childHeight;
+      final double flingVelocity =
+          -details.velocity.pixelsPerSecond.dy / _childHeight;
       if (widget.animationController.value > 0.0) {
         widget.animationController.fling(velocity: flingVelocity);
       }

@@ -35,4 +35,3 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 export "simulate_core.dart";
 export "simulate_scroll.dart";
 export "simulate_status_bar.dart";
-

@@ -62,7 +62,6 @@ class _FramePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    
     // print(size);
     final path_0 = Path();
     path_0.moveTo(0, 15.9801);
