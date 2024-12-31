@@ -2,11 +2,10 @@
 
 // /* <!-- START LICENSE -->
 
-
 // This Software / Program / Source Code Created By Developer From Company GLOBAL CORPORATION
 // Social Media:
 
-//    - Youtube: https://youtube.com/@Global_Corporation 
+//    - Youtube: https://youtube.com/@Global_Corporation
 //    - Github: https://github.com/globalcorporation
 //    - TELEGRAM: https://t.me/GLOBAL_CORP_ORG_BOT
 
@@ -29,9 +28,8 @@
 
 // Sebelum program ini sampai ke pembeli developer kami sudah melakukan testing
 
-// jadi sebelum nego kami sudah melakukan berbagai konsekuensi jika nego tidak sesuai ? 
+// jadi sebelum nego kami sudah melakukan berbagai konsekuensi jika nego tidak sesuai ?
 // Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba tiba di potong akhirnya bantuan / software kadang tidak lengkap
-
 
 // <!-- END LICENSE --> */
 // import 'package:flutter/material.dart';
