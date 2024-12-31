@@ -19,3 +19,4 @@ windows/ephemeral
 tmp/
 temp/
 generate_general_private_tools_*
+custom.dart

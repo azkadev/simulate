@@ -21,7 +21,7 @@ dependencies:
   file_picker: '^8.1.4'
   window_manager: '^0.4.3'
   flutter_hicons: '^0.1.0'
-  universal_io: '^2.2.2'
+  io_universe: '^0.0.2'
   general_lib_flutter: '^0.0.32'
   general_lib: '^0.0.51'
   icons_plus: '^5.0.0'

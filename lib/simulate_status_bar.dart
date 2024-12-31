@@ -42,7 +42,7 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 import 'package:general_lib/general_lib.dart';
 import 'package:general_lib_flutter/general_lib_flutter.dart';
 import 'package:icons_plus/icons_plus.dart';
-import "package:universal_io/io.dart";
+import "package:io_universe/io_universe.dart";
 
 import 'package:flutter/material.dart';
 // import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -155,19 +155,14 @@ class StatusBarSimulate extends StatelessWidget {
                         PopupMenuItem(
                           onTap: () async {
                             try {
-                              String? selectedDirectory =
-                                  await FilePicker.platform.getDirectoryPath();
+                              String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
 
-                              if (selectedDirectory != null) {
-                                var getPathFile =
-                                    "${selectedDirectory}/${DateTime.now()}.png";
+                              var getPathFile = "${selectedDirectory}/${DateTime.now()}.png";
 
-                                Uint8List? pngBytes =
-                                    await globalKey.toImagePng();
-                                if (pngBytes != null) {
-                                  var file = File(getPathFile);
-                                  await file.writeAsBytes(pngBytes);
-                                }
+                              Uint8List? pngBytes = await globalKey.toImagePng();
+                              if (pngBytes != null) {
+                                var file = File(getPathFile);
+                                await file.writeAsBytes(pngBytes);
                               }
                             } catch (e) {}
                           },
@@ -176,21 +171,15 @@ class StatusBarSimulate extends StatelessWidget {
                         PopupMenuItem(
                           onTap: () async {
                             try {
-                              String? selectedDirectory =
-                                  await FilePicker.platform.getDirectoryPath();
-                              if (selectedDirectory != null) {
-                                var getPathFile =
-                                    "${selectedDirectory}/${DateTime.now()}.png";
-                                Uint8List? pngBytes =
-                                    await newGlobalKey.toImagePng();
+                              String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+                              var getPathFile = "${selectedDirectory}/${DateTime.now()}.png";
+                              Uint8List? pngBytes = await newGlobalKey.toImagePng();
 
-                                if (pngBytes != null) {
-                                  var file = File(getPathFile);
-                                  await file.writeAsBytes(pngBytes);
-                                } else {
-                                  context.showSnackBar(
-                                      "Maaf Gagal membuat Image Ke Png");
-                                }
+                              if (pngBytes != null) {
+                                var file = File(getPathFile);
+                                await file.writeAsBytes(pngBytes);
+                              } else {
+                                context.showSnackBar("Maaf Gagal membuat Image Ke Png");
                               }
                             } catch (e) {
                               if (kDebugMode) {
@@ -224,8 +213,7 @@ class StatusBarSimulate extends StatelessWidget {
                         return false;
                       }
                     }(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                       if (snapshot.data == true) {
                         return WindowCaptionButton.unmaximize(
                           brightness: platformBrightness(context: context),

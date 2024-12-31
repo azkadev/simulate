@@ -212,18 +212,18 @@ packages:
     dependency: "direct main"
     description:
       name: general_lib
-      sha256: a5e273dbd9ec27dbbe824134319d7568fd8c669fc0502f36e84b48eadee51206
+      sha256: "410fde426da545b3e3e2aa813d688dd39442ad9741f71ab6a630de1aa34cd95a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.50"
+    version: "0.0.51"
   general_lib_flutter:
     dependency: "direct main"
     description:
       name: general_lib_flutter
-      sha256: "39433e3c4e1098ae27420d55a1129cd97ccbab13ef0aca183ad728d226976336"
+      sha256: b0420fbf695b7e86a6b1a712a68ef24932cd2eb4df7c507628903ae3a3ad26ea
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.31"
+    version: "0.0.32"
   http:
     dependency: transitive
     description:
@@ -264,6 +264,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  io_universe:
+    dependency: "direct main"
+    description:
+      name: io_universe
+      sha256: "1cdda523af01167c552360881be82d0daefb5c6e16fcfc84fcff67b92a8acef4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   js:
     dependency: transitive
     description:
@@ -489,18 +497,18 @@ packages:
     dependency: "direct main"
     description:
       name: system_information
-      sha256: ed1a9c2660c531d1e162d7902892556fb531ad80755fc67aebdd5c8aa27b4b82
+      sha256: a170cc1cc512dd2c471264548417b4e3db747bcb289abbf61077e4fc84ea25c5
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.5"
   system_information_flutter:
     dependency: transitive
     description:
       name: system_information_flutter
-      sha256: "2ee69678b624f6d3ff587570940a6a6c69db960ce74befcb74b1384ca29f2c1f"
+      sha256: "665b97a6055d06c06f3168487b0636c972918e06d7a174082e81bac817bd5628"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4"
+    version: "0.0.5"
   term_glyph:
     dependency: transitive
     description:
@@ -526,7 +534,7 @@ packages:
     source: hosted
     version: "1.3.2"
   universal_io:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: universal_io
       sha256: "1722b2dcc462b4b2f3ee7d188dad008b6eb4c40bbd03a3de451d82c78bba9aad"

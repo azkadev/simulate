@@ -1,8 +1,6 @@
 import 'package:general_lib/general_lib.dart';
-import 'package:universal_io/io.dart';
+import 'package:io_universe/io_universe.dart';
 
 void main(List<String> args) {
-  Dart.pub
-      .installFromDirectory(directoryPackage: Directory.current)
-      .printPretty();
+  Dart.pub.installFromDirectoryFresh(directoryPackage: Directory.current).printPretty();
 }
