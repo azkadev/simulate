@@ -13,7 +13,7 @@ dependencies:
   path_provider: '^2.1.5'
   easy_isolate: '^1.3.0'
   universal_io: '^2.2.2'
-  general_lib_flutter: '^0.0.39'
+  general_lib_flutter: '^0.0.40'
   simulate:
     path: '../'
 dev_dependencies:
