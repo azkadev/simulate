@@ -53,19 +53,36 @@ import 'package:window_manager/window_manager.dart';
 export 'package:device_frame/device_frame.dart';
 export 'package:file_picker/file_picker.dart';
 
+/// UncompleteDocumentation
 class SimulateData extends ChangeNotifier {
+  /// UncompleteDocumentation
   bool is_simulate = (kDebugMode);
+
+  /// UncompleteDocumentation
   bool is_use_simulate_app = false;
+
+  /// UncompleteDocumentation
   bool is_show_status_bar = true;
+
+  /// UncompleteDocumentation
   bool is_show_navigation_bar = true;
+
+  /// UncompleteDocumentation
   bool is_show_full_operating_system = false;
 
+  /// UncompleteDocumentation
   final GlobalKey global_status_bar = GlobalKey();
+
+  /// UncompleteDocumentation
   final GlobalKey global_bottom_bar = GlobalKey();
+
+  /// UncompleteDocumentation
   final GlobalKey global_home_widget = GlobalKey();
 
+  /// UncompleteDocumentation
   void Function() onUpdate = () {};
 
+  /// UncompleteDocumentation
   bool isSimulateUpdate() {
     is_simulate = (!is_simulate);
     notifyListeners();
@@ -74,10 +91,18 @@ class SimulateData extends ChangeNotifier {
   }
 }
 
+/// UncompleteDocumentation
 class SimulateApp extends StatefulWidget {
+  /// UncompleteDocumentation
   final Widget Function(BuildContext context) home;
+
+  /// UncompleteDocumentation
   final GeneralLibFlutterApp generalLibFlutterApp;
+
+  /// UncompleteDocumentation
   final String? title;
+
+  /// UncompleteDocumentation
   const SimulateApp({
     super.key,
     required this.home,
@@ -277,20 +302,44 @@ class _SimulateAppState extends State<SimulateApp> {
 
 /// simulate part
 class Simulate extends StatefulWidget {
+  /// UncompleteDocumentation
   final Widget home;
+
+  /// UncompleteDocumentation
   final GeneralLibFlutterApp generalLibFlutterApp;
+
+  /// UncompleteDocumentation
   final DeviceInfo? deviceDefault;
+
+  /// UncompleteDocumentation
   final bool isShowExperimental;
+
+  /// UncompleteDocumentation
   final bool isShowFrame;
+
+  /// UncompleteDocumentation
   final bool isShowTopFrame;
+
+  /// UncompleteDocumentation
   final Widget Function(
       BuildContext context, Widget home, DeviceInfo deviceInfo)? customView;
 
+  /// UncompleteDocumentation
   final GlobalKey? allBodyKey;
+
+  /// UncompleteDocumentation
   final GlobalKey? frameBodyKey;
+
+  /// UncompleteDocumentation
   final EdgeInsets? paddingFrame;
+
+  /// UncompleteDocumentation
   final Orientation? orientation;
+
+  /// UncompleteDocumentation
   final AlignmentGeometry alignment;
+
+  /// UncompleteDocumentation
   const Simulate({
     super.key,
     required this.generalLibFlutterApp,
@@ -310,8 +359,10 @@ class Simulate extends StatefulWidget {
   @override
   State<Simulate> createState() => _SimulateState();
 
+  /// UncompleteDocumentation
   static SimulateData simulate_data = SimulateData();
 
+  /// UncompleteDocumentation
   static Future<void> ensureInitialized({
     bool? isSimulate,
     Size? size,
@@ -387,6 +438,7 @@ class Simulate extends StatefulWidget {
     }
   }
 
+  /// UncompleteDocumentation
   static Future<void> setTitleBarVisibility({
     bool visibility = false,
     bool windowButtonVisibility = false,
@@ -762,10 +814,12 @@ class _SimulateState extends State<Simulate> with TickerProviderStateMixin {
 //     notifyListeners();
 //   }
 // }
-
+/// UncompleteDocumentation
 class StatusBarSimulateWidget extends StatefulWidget {
+  /// UncompleteDocumentation
   final AnimationController animationController;
   // final StatusBarHeightData statusBarHeightData;
+  /// UncompleteDocumentation
   const StatusBarSimulateWidget({
     super.key,
     required this.animationController,

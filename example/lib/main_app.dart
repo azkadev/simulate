@@ -36,6 +36,7 @@ Bukan maksud kami menipu itu karena harga yang sudah di kalkulasi + bantuan tiba
 <!-- END LICENSE --> */
 import 'package:flutter/material.dart';
 
+/// UncompleteDocumentation
 class Iphone15ProMaxFullFrameShape extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,7 @@ class Iphone15ProMaxFullFrameShape extends StatelessWidget {
   }
 }
 
+/// UncompleteDocumentation
 class Iphone15ProMaxFullFramePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

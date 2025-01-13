@@ -20,3 +20,5 @@ tmp/
 temp/
 generate_general_private_tools_*
 custom.dart
+packagex-build-debug
+packagex-compile-debug

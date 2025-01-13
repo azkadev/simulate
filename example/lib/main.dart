@@ -49,9 +49,12 @@ void main() async {
   );
 }
 
+/// UncompleteDocumentation
 GeneralLibFlutterApp generalLibFlutterApp = GeneralLibFlutterApp();
 
+/// UncompleteDocumentation
 class App extends StatelessWidget {
+  /// UncompleteDocumentation
   const App({
     super.key,
   });
@@ -124,7 +127,10 @@ class App extends StatelessWidget {
   }
 }
 
+/// UncompleteDocumentation
+
 class Home extends StatefulWidget {
+  /// UncompleteDocumentation
   const Home({
     super.key,
   });
@@ -161,7 +167,9 @@ class _HomeState extends State<Home> {
   }
 }
 
+/// UncompleteDocumentation
 class LoginScreen extends StatefulWidget {
+  /// UncompleteDocumentation
   const LoginScreen({super.key});
 
   @override

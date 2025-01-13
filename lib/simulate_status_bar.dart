@@ -72,12 +72,14 @@ export 'package:file_picker/file_picker.dart';
 /// ```
 /// {@end-tool}
 class DragToMoveAreaSimulateWidget extends StatelessWidget {
+  /// UncompleteDocumentation
+  final Widget child;
+
+  /// UncompleteDocumentation
   const DragToMoveAreaSimulateWidget({
     super.key,
     required this.child,
   });
-
-  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +96,21 @@ class DragToMoveAreaSimulateWidget extends StatelessWidget {
   }
 }
 
+/// UncompleteDocumentation
 class StatusBarSimulate extends StatelessWidget {
+  /// UncompleteDocumentation
   final GlobalKey globalKey;
+
+  /// UncompleteDocumentation
   final GlobalKey newGlobalKey;
+
+  /// UncompleteDocumentation
   final Widget child;
+
+  /// UncompleteDocumentation
   final GeneralLibFlutterApp generalLibFlutterApp;
+
+  /// UncompleteDocumentation
   const StatusBarSimulate({
     super.key,
     required this.generalLibFlutterApp,
@@ -260,6 +272,7 @@ class StatusBarSimulate extends StatelessWidget {
     );
   }
 
+  /// UncompleteDocumentation
   Brightness platformBrightness({
     required BuildContext context,
   }) {

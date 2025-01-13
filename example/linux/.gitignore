@@ -19,3 +19,5 @@ windows/ephemeral
 tmp/
 temp/
 generate_general_private_tools_*
+packagex-build-debug
+packagex-compile-debug
