@@ -1,6 +1,6 @@
 name: 'simulate'
 description: 'Simulate application or add device mock on your app or your flutter project suppoer cross platform android ios , linux , macos, windows.'
-version: '0.0.51'
+version: '0.0.52'
 homepage: 'https://github.com/azkadev/simulate'
 repository: 'https://github.com/azkadev/simulate'
 issue_tracker: 'https://github.com/azkadev/simulate/issues'
@@ -21,11 +21,11 @@ dependencies:
   file_picker: '^8.1.4'
   window_manager: '^0.4.3'
   flutter_hicons: '^0.1.0'
-  io_universe: '^0.0.4'
-  general_lib_flutter: '^0.0.40'
-  general_lib: '^0.0.61'
+  io_universe: '^0.0.5'
+  general_lib_flutter: '^0.0.41'
+  general_lib: '^0.0.62'
   icons_plus: '^5.0.0'
-  system_information: '^0.0.9'
+  system_information: '^0.0.10'
 dev_dependencies:
   flutter_test:
     sdk: 'flutter'
