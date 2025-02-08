@@ -23,7 +23,7 @@ dependencies:
   flutter_hicons: '^0.1.0'
   io_universe: '^0.0.5'
   general_lib_flutter: '^0.0.41'
-  general_lib: '^0.0.62'
+  general_lib: '^0.0.63'
   icons_plus: '^5.0.0'
   system_information: '^0.0.10'
 dev_dependencies:
