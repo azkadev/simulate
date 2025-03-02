@@ -7,3 +7,5 @@ analyzer:
     - test
     - dev
     - templates
+formatter:
+  page_width: 9999999999

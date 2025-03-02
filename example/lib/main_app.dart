@@ -57,20 +57,13 @@ class Iphone15ProMaxFullFramePainter extends CustomPainter {
     path.lineTo(size.width, 0);
 
     // Right edge
-    path.arcToPoint(Offset(size.width, size.height),
-        radius:
-            Radius.circular(size.width * 0.05)); // Adjust curvature as needed
+    path.arcToPoint(Offset(size.width, size.height), radius: Radius.circular(size.width * 0.05)); // Adjust curvature as needed
 
     // Bottom edge
-    path.lineTo(
-        size.width,
-        size.height -
-            size.width * 0.1); // Adjust height based on actual notch size
+    path.lineTo(size.width, size.height - size.width * 0.1); // Adjust height based on actual notch size
 
     // Left edge
-    path.arcToPoint(Offset(0, size.height - size.width * 0.1),
-        radius:
-            Radius.circular(size.width * 0.05)); // Adjust curvature as needed
+    path.arcToPoint(Offset(0, size.height - size.width * 0.1), radius: Radius.circular(size.width * 0.05)); // Adjust curvature as needed
 
     // Close the path
     path.close();

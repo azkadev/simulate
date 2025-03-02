@@ -72,8 +72,7 @@ class App extends StatelessWidget {
           home: () {
             if (Platform.isAndroid || Platform.isIOS) {
               return ConstrainedBox(
-                constraints: BoxConstraints(
-                    minHeight: context.height, minWidth: context.width),
+                constraints: BoxConstraints(minHeight: context.height, minWidth: context.width),
                 child: Column(
                   children: [
                     SizedBox(
