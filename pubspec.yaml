@@ -23,7 +23,7 @@ dependencies:
   general_lib_flutter: '^0.0.41'
   general_lib: '^0.0.67'
   icons_plus: '^5.0.0'
-  system_information: '^0.0.10'
+  system_information: '^0.0.12'
 dev_dependencies:
   flutter_test:
     sdk: 'flutter'
@@ -31,7 +31,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 dependency_overrides:
-  pointycastle: '3.8.0'
+  pointycastle: '4.0.0'
   mime: '^2.0.0'
 funding:
   - 'https://github.com/sponsors/azkadev'
