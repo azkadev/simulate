@@ -1,7 +1,7 @@
 name: 'simulate'
 description: 'Simulate application or add device mock on your app or your flutter project suppoer cross platform android ios , linux , macos, windows.'
-version: '0.0.53' 
-repository: 'https://github.com/azkadev/simulate' 
+version: '0.0.53'
+repository: 'https://github.com/azkadev/simulate'
 platforms:
   android: null
   ios: null
@@ -38,4 +38,4 @@ funding:
   - 'https://github.com/sponsors/generalfoss'
 documentation: 'https://youtube.com/@azkadev'
 project:
-  type: ''
+  type: 'library'
