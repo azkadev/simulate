@@ -14,8 +14,7 @@ dependencies:
   easy_isolate: '^1.3.0'
   universal_io: '^2.2.2'
   general_lib_flutter: '^0.0.42'
-  simulate:
-    path: '../'
+  general_framework: '^0.0.30'
 dev_dependencies:
   flutter_test:
     sdk: 'flutter'

@@ -18,12 +18,11 @@ dependencies:
   device_frame: '^1.2.0'
   file_picker: '^9.0.2'
   window_manager: '^0.4.3'
-  flutter_hicons: '^1.0.0'
   io_universe: '^0.0.8'
   general_lib_flutter: '^0.0.42'
-  general_lib: '^0.0.69'
-  icons_plus: '^5.0.0'
+  general_lib: '^0.0.70'
   system_information: '^0.0.13'
+  general_framework: '^0.0.30'
 dev_dependencies:
   flutter_test:
     sdk: 'flutter'
