@@ -20,9 +20,9 @@ dependencies:
   window_manager: '^0.4.3'
   io_universe: '^0.0.8'
   general_lib_flutter: '^0.0.42'
-  general_lib: '^0.0.70'
+  general_lib: '^0.0.71'
   system_information: '^0.0.13'
-  general_framework: '^0.0.30'
+  general_framework: '^0.0.31'
 dev_dependencies:
   flutter_test:
     sdk: 'flutter'
